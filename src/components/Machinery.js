@@ -35,7 +35,7 @@ const Machinery = () => {
             className="object-cover w-full"
           />
           <button className="absolute w-32 h-32 -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-            <Link href={"https://youtu.be/aVNa8Dka5MA"} target="_blank">
+            <Link href={"https://www.youtube.com/@beastwillgaxxgaming3952/featured"} target="_blank">
               <span className="absolute block w-full h-full duration-700 -translate-x-1/2 -translate-y-1/2 rounded-full playButton bg-rose-500 top-1/2 left-1/2"></span>
               <PlayArrowIcon className="w-16 h-16 md:w-24 md:h-24 text-white bg-[#ffffffb8] rounded-full" />
             </Link>

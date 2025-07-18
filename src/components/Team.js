@@ -12,7 +12,7 @@ const TeamCard = ({ imgSrc, name, title, facebook, instagram, linkedin }) => {
         width={130}
         height={130}
         alt="team member"
-        className="w-20 mx-auto mb-3 border-2 rounded-full drop-shadow-2xl sm:w-32 md:mb-5 border-rose-500"
+        className="object-cover w-32 h-32 mx-auto mb-3 border-2 rounded-full drop-shadow-2xl md:mb-5 border-rose-500"
       />
       <h2 className="text-base font-semibold text-center sm:text-xl">{name}</h2>
       <p className="text-sm text-center sm:text-base">{title}</p>
@@ -46,7 +46,7 @@ const Team = () => {
 
       <div className="grid grid-cols-2 mx-auto mt-16 lg:grid-cols-2 gap-y-8 sm:gap-8">
         <TeamCard
-          imgSrc="/team/1.png"
+          imgSrc="/team/2.png"
           name="Satyam Goyal"
           title="Founder"
           facebook="https://www.facebook.com/satyam.goyal.393"
@@ -54,12 +54,12 @@ const Team = () => {
           linkedin="https://www.linkedin.com/in/satyam-goyal-4082792ba/"
         />
         <TeamCard
-          imgSrc="/team/2.png"
+          imgSrc="/team/1.png"
           name="Shivam Goyal"
           title="Founder"
-          facebook="https://www.facebook.com/shivam.09.goyal" // change to actual
-          instagram="https://www.instagram.com/shiivamgoyall/" // change to actual
-          // linkedin="https://www.linkedin.com/in/shivam-goyal" // change to actual
+          facebook="https://www.facebook.com/shivam.09.goyal"
+          instagram="https://www.instagram.com/shiivamgoyall/"
+          linkedin="https://www.linkedin.com/in/shivam-goyal"
         />
       </div>
     </section>
