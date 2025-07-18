@@ -81,7 +81,7 @@ const About = () => {
       <div className="relative flex-1 w-full" ref={imageRef}>
         <div className="md:before:w-full md:before:h-full md:before:absolute md:before:-bottom-24 lg:before:-bottom-20 xl:before:-right-5 lg:before:-right-12 md:before:-right-16 md:before:bg-right-bottom md:before:bg-contain md:before:bg-no-repeat before:-z-50 before:bg-none md:before:bg-[url('/videobg.png')]">
           <Image
-            src={"/hero.png"}
+            src={"/main.png"}
             width={300}
             height={300}
             alt="core features"
