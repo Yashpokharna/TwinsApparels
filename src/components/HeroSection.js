@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <section
       className="flex flex-col items-center justify-center h-full gap-10 text-center sm:gap-20 mt-28 sm:mt-32 md:mt-44"
-      id="home"
+      id="Home"
     >
       <div className="container px-5 mx-auto md:w-2/3 lg:w-1/2 md:px-16">
         <h1 className="capitalize flex flex-col gap-2 md:gap-5 text-3xl sm:text-4xl md:text-[3.2rem] 2xl:text-5xl font-bold">
