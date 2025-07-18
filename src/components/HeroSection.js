@@ -1,7 +1,23 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const HeroSection = () => {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Avoid hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  // Choose image based on theme
+  const heroImg = theme === "dark" ? "/hero-dark.png" : "/hero.png";
+
   return (
     <section
       className="flex flex-col items-center justify-center h-full gap-10 text-center sm:gap-20 mt-28 sm:mt-32 md:mt-44"
@@ -9,8 +25,8 @@ const HeroSection = () => {
     >
       <div className="container px-5 mx-auto md:w-2/3 lg:w-1/2 md:px-16">
         <h1 className="capitalize flex flex-col gap-2 md:gap-5 text-3xl sm:text-4xl md:text-[3.2rem] 2xl:text-5xl font-bold">
-          <p>Precision In Every Thread, </p>
-          <p>Excellence In Every Roll </p>
+          <p>Precision In Every Thread,</p>
+          <p>Excellence In Every Roll</p>
         </h1>
         <p className="my-4 text-lg leading-normal sm:leading-loose md:my-6">
           We manufacture high-quality textiles with consistency, care, and craftsmanship.
@@ -22,14 +38,16 @@ const HeroSection = () => {
           </Link>
         </button>
       </div>
+
       <div className="relative w-full">
         <div className="before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[url('/herobg1.png')] before:bg-left-bottom before:bg-contain before:bg-no-repeat before:-z-50 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-[url('/herobg2.png')] after:bg-right after:bg-contain after:bg-no-repeat after:-z-50">
           <Image
-            src="/hero.png"
+            src={heroImg}
             width={700}
             height={700}
-            alt="hero Image"
-            className="object-contain mx-auto"
+            alt="Hero Image"
+            className="object-contain mx-auto transition-opacity duration-500"
+            priority
           />
         </div>
       </div>
