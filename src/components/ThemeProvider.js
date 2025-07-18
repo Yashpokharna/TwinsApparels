@@ -2,7 +2,6 @@
 
 import { ThemeProvider as Theme } from "next-themes";
 import Navbar from "./Navbar";
-import Footer from "./Footer";
 import ScrollTop from "./ScrollTop";
 import NextNProgress from "nextjs-progressbar";
 import { useState, useEffect } from "react";
@@ -19,7 +18,7 @@ const ThemeProvider = ({ children }) => {
   }
 
   return (
-    <Theme attribute={"class"} enableSystem={false}>
+    <Theme attribute="class" enableSystem={false}>
       <NextNProgress
         color="#e11d48"
         startPosition={0.3}
@@ -31,7 +30,6 @@ const ThemeProvider = ({ children }) => {
       <Navbar />
       {children}
       <ScrollTop />
-      <Footer />
     </Theme>
   );
 };
