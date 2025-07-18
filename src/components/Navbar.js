@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
@@ -60,7 +59,7 @@ const Navbar = () => {
             >
               <CloseOutlinedIcon />
             </button>
-            {["home", "features", "pricing", "testimonial"].map((link) => (
+            {["Home", "About", "Machinery", "Products", "Team"].map((link) => (
               <li
                 key={link}
                 className={`${
@@ -71,35 +70,12 @@ const Navbar = () => {
                 <Link href={`#${link}`}>{link}</Link>
               </li>
             ))}
-            <div className="absolute flex gap-3 mx-auto -translate-x-1/2 md:hidden bottom-16 left-1/2">
-              <Link
-                href="https://www.facebook.com/profile.php?id=100017192357822&sk"
-                target="_blank"
-              >
-                <FacebookOutlinedIcon className="text-xl cursor-pointer hover:text-rose-600" />
-              </Link>
-              <Link
-                target="_blank"
-                href={"https://www.linkedin.com/in/naseem-khan-275275258/"}
-              >
-                <LinkedInIcon className="text-xl cursor-pointer hover:text-rose-600" />
-              </Link>
-              <Link target="_blank" href={"https://github.com/NaseemKhan005/"}>
-                <GitHubIcon className="text-xl cursor-pointer hover:text-rose-600" />
-              </Link>
-              <Link
-                target="_blank"
-                href={"https://www.instagram.com/naseem_khan005/"}
-              >
-                <InstagramIcon className="text-xl cursor-pointer hover:text-rose-600" />
-              </Link>
-            </div>
           </ul>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4 md:gap-2 lg:gap-4">
           <button className="px-3 py-2 text-sm font-semibold capitalize border-2 rounded-full sm:text-base hover:border-2 sm:py-3 sm:px-6 text-rose-600 border-rose-600 hover:border-rose-600 hover:bg-rose-600 hover:text-white">
-            <Link href={"#pricing"}>Get Started</Link>
+            <Link href={"#about"}>Get Started</Link>
           </button>
           <button>
             {theme === "dark" ? (

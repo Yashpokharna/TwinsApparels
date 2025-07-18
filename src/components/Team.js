@@ -39,7 +39,7 @@ const TeamCard = ({ imgSrc, name, title }) => {
 
 const Team = () => {
   return (
-    <section className="container px-5 mx-auto md:px-16 lg:px-24">
+    <section className="container px-5 mx-auto md:px-16 lg:px-24" id="Team">
       <span className="text-center service-name ">OUR TEAM</span>
       <h2 className="mx-auto text-center title md:w-1/2">
         Driven By Teamwork

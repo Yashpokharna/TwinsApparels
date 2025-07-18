@@ -22,9 +22,9 @@ const ServiceCard = ({ imgSrc, title, desc }) => {
   );
 };
 
-const Services = () => {
+const Machinery = () => {
   return (
-    <section className="container relative px-5 mx-auto md:px-16">
+    <section className="container relative px-5 mx-auto md:px-16" id="Machinery">
       <div className="flex flex-col-reverse items-center gap-10 lg:flex-row">
         <div className="relative flex-1 w-full">
           <Image
@@ -66,4 +66,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Machinery;

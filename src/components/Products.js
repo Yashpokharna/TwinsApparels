@@ -12,9 +12,9 @@ const QualityFeature = ({ imgSrc, title, desc }) => {
   );
 };
 
-const QualityFeatures = () => {
+const Products = () => {
   return (
-    <section className="container px-5 mx-auto md:px-16">
+    <section className="container px-5 mx-auto md:px-16" id="Products">
       <span className="text-center service-name ">OUR PRODUCTS</span>
       <h2 className="text-center title ">Style. Comfort. Quality. Always.</h2>
 
@@ -44,4 +44,4 @@ const QualityFeatures = () => {
   );
 };
 
-export default QualityFeatures;
+export default Products;
