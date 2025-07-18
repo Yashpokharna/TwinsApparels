@@ -9,8 +9,8 @@ const HeroSection = () => {
     >
       <div className="container px-5 mx-auto md:w-2/3 lg:w-1/2 md:px-16">
         <h1 className="capitalize flex flex-col gap-2 md:gap-5 text-3xl sm:text-4xl md:text-[3.2rem] 2xl:text-5xl font-bold">
-          <p>Precision in every thread </p>
-          <p>Excellence in every roll </p>
+          <p>Precision In Every Thread, </p>
+          <p>Excellence In Every Roll </p>
         </h1>
         <p className="my-4 text-lg leading-normal sm:leading-loose md:my-6">
           We manufacture high-quality textiles with consistency, care, and craftsmanship.
