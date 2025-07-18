@@ -54,12 +54,12 @@ const Team = () => {
           linkedin="https://www.linkedin.com/in/satyam-goyal-4082792ba/"
         />
         <TeamCard
-          imgSrc="/team/1.png"
+          imgSrc="/team/3.png"
           name="Shivam Goyal"
           title="Founder"
           facebook="https://www.facebook.com/shivam.09.goyal"
           instagram="https://www.instagram.com/shiivamgoyall/"
-          linkedin="https://www.linkedin.com/in/shivam-goyal"
+          // linkedin="https://www.linkedin.com/in/shivam-goyal"
         />
       </div>
     </section>
