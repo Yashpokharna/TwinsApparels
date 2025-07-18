@@ -35,7 +35,7 @@ const FeatureProduct = ({ imgSrc, title, desc, index }) => {
   return (
     <div
       ref={cardRef}
-      className="p-6 transition-transform duration-300 bg-white shadow-lg rounded-xl hover:scale-105"
+      className="p-6 transition-transform duration-300 shadow-lg rounded-xl hover:scale-105"
     >
       <Image
         src={imgSrc}

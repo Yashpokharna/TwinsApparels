@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import SplitType from "split-type";
+import { useTheme } from "next-themes";
 
 const HeroSection = () => {
   const line1Ref = useRef(null);
@@ -11,6 +12,7 @@ const HeroSection = () => {
   const paraRef = useRef(null);
   const btnRef = useRef(null);
   const imgRef = useRef(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const line1Split = new SplitType(line1Ref.current, { types: "words" });
@@ -62,7 +64,7 @@ const HeroSection = () => {
         "-=1"
       );
   }, []);
-
+const heroImage = theme === "dark" ? "/hero-dark.png" : "/hero.png";
   return (
     <section
       className="flex flex-col items-center justify-center h-full gap-10 text-center sm:gap-20 mt-28 sm:mt-32 md:mt-44"
@@ -90,14 +92,14 @@ const HeroSection = () => {
       <div className="relative w-full" ref={imgRef}>
         <div className="before:w-full before:h-full before:absolute before:top-0 before:left-0 before:bg-[url('/herobg1.png')] before:bg-left-bottom before:bg-contain before:bg-no-repeat before:-z-50 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-[url('/herobg2.png')] after:bg-right after:bg-contain after:bg-no-repeat after:-z-50">
           <Image
-            src="/hero.png"
+            src={heroImage}
             width={700}
             height={700}
             alt="hero Image"
             className="object-contain mx-auto"
           />
         </div>
-      </div>
+      </div>
     </section>
   );
 };

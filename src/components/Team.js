@@ -54,7 +54,7 @@ const TeamCard = ({ imgSrc, name, title, facebook, instagram, linkedin, index })
   return (
     <div
       ref={cardRef}
-      className="relative flex flex-col gap-1 bg-white md:hover:shadow-lg rounded-xl md:py-10 team-card md:cursor-pointer"
+      className="relative flex flex-col gap-1 md:hover:shadow-lg rounded-xl md:py-10 team-card md:cursor-pointer"
     >
       <Image
         ref={imgRef}
