@@ -7,6 +7,9 @@ const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"] });
 export const metadata = {
   title: "Twins Apparels",
   description: "Delivering fabric excellence across every thread.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {
