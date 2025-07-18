@@ -11,11 +11,16 @@ html {
 }
 
 .service-name {
-  @apply text-rose-600 uppercase block font-semibold text-sm tracking-widest;
+  @apply block text-sm font-semibold tracking-widest uppercase text-rose-600;
 }
 
 .title {
-  @apply capitalize text-2xl sm:text-3xl font-semibold my-3;
+  @apply my-3 text-2xl font-semibold capitalize sm:text-3xl;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; 
 }
 
 .rotate {

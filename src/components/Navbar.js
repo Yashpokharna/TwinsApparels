@@ -65,11 +65,37 @@ const Navbar = () => {
                 className={`${
                   selectedItem === link ? "text-rose-600" : ""
                 } capitalize border-b py-4 md:border-none md:py-0 hover:text-rose-600`}
-                onClick={() => setSelectedItem(link)}
+                onClick={() => {
+      setSelectedItem(link);
+      setToggleMenu(false); 
+    }}
               >
                 <Link href={`#${link}`}>{link}</Link>
               </li>
             ))}
+            <div className="absolute flex gap-3 mx-auto -translate-x-1/2 md:hidden bottom-16 left-1/2">
+              <Link
+                href="https://www.facebook.com/profile.php?id=100017192357822&sk"
+                target="_blank"
+              >
+                <FacebookOutlinedIcon className="text-xl cursor-pointer hover:text-rose-600" />
+              </Link>
+              <Link
+                target="_blank"
+                href={"https://www.linkedin.com/in/naseem-khan-275275258/"}
+              >
+                <LinkedInIcon className="text-xl cursor-pointer hover:text-rose-600" />
+              </Link>
+              <Link target="_blank" href={"https://github.com/NaseemKhan005/"}>
+                <GitHubIcon className="text-xl cursor-pointer hover:text-rose-600" />
+              </Link>
+              <Link
+                target="_blank"
+                href={"https://www.instagram.com/naseem_khan005/"}
+              >
+                <InstagramIcon className="text-xl cursor-pointer hover:text-rose-600" />
+              </Link>
+            </div>
           </ul>
         </div>
 
