@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="px-5 py-10 mt-16 border-t border-neutral-200 md:px-16 md:py-16">
+    <footer className="px-5 py-10 mt-16 border-t border-neutral-200 md:px-16 md:py-16" id="Footer">
       <div className="container flex flex-col items-center mx-auto"> 
         <div className="items-center">
           <div className="flex flex-col items-center justify-center">

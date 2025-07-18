@@ -20,7 +20,7 @@ html {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; 
+  scroll-padding-top: 100px; /* Adjust based on your navbar height */
 }
 
 .rotate {
