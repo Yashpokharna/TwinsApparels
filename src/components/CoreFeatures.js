@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const CoreFeatures = () => {
   return (
-    <section className="container flex flex-col items-center px-4 mx-14 md:px-16 lg:flex-row lg:gap-20 gap-14">
+    <section className="container flex flex-col items-center px-4 mx-auto md:px-16 lg:flex-row lg:gap-20 gap-14">
       <div className="flex flex-col flex-1 gap-2">
         <span className="block text-3xl font-semibold tracking-widest uppercase text-rose-600">
           ABOUT US
