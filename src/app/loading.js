@@ -32,7 +32,7 @@ const Loading = () => {
             ></animate>
           </path>
         </svg>
-        <p className="text-center font-[500] text-xl mt-3">LOADING...</p>
+        <p className="text-center font-[500] text-xl mt-3">LOADING TwinsApparels...</p>
       </div>
     </div>
   );

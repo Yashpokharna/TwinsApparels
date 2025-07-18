@@ -10,16 +10,14 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="px-5 py-10 mt-16 border-t border-neutral-200 md:px-16 md:py-16">
-      <div className="container mx-auto">
+      <div className="container flex flex-col items-center mx-auto"> 
         <div className="items-center">
-          <div>
-            <Link href={"/"} className="items-center text-3xl">
-              <span className="text-rose-600">Twins</span>Apparels.
-            </Link>
-            <p className="max-w-xs mt-4 text-sm">
-              Precision In Every Thread, <br/>
-              Excellence In Every Roll.
-            </p>
+          <div className="flex flex-col items-center justify-center">
+            <div>
+              <Link href={"/"} className="items-center text-3xl">
+                <span className="text-rose-600">Twins</span>Apparels.
+              </Link>
+            </div>
             <div className="mt-8 space-x-6">
               <Link
                 href="https://www.facebook.com/profile.php?id=100017192357822&sk"
@@ -167,7 +165,9 @@ const Footer = () => {
             </div>
           </div> */}
         </div>
-        <p className="mt-8 text-xs">© 2025 TwinsApparels - All rights reserved</p>
+        <div>
+        <p className="mt-8 text-sm items-cente">© 2025 TwinsApparels - All rights reserved</p>
+        </div>
       </div>
     </footer>
   );

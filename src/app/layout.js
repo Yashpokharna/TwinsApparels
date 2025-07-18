@@ -5,8 +5,8 @@ import ThemeProvider from "@/components/ThemeProvider";
 const dmSans = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 export const metadata = {
-  title: "Business App - Naseem Khan",
-  description: "Business App created by Naseem Khan",
+  title: "Twins Apparels",
+  description: "Delivering fabric excellence across every thread.",
 };
 
 export default function RootLayout({ children }) {
