@@ -1,5 +1,4 @@
 "use client";
-
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -20,25 +19,25 @@ const Footer = () => {
             </div>
             <div className="mt-8 space-x-6">
               <Link
-                href="https://www.facebook.com/profile.php?id=100017192357822&sk"
+                href=""
                 target="_blank"
               >
                 <FacebookOutlinedIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
               </Link>
-              <Link href="https://github.com/NaseemKhan005" target="_blank">
+              <Link href="" target="_blank">
                 <GitHubIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
               </Link>
               <Link
-                href="https://www.linkedin.com/in/naseem-khan-275275258/"
+                href=""
                 target="_blank"
               >
                 <LinkedInIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
               </Link>
-              <Link href="https://twitter.com/NaseemK69128903" target="_blank">
+              <Link href="" target="_blank">
                 <TwitterIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
               </Link>
               <Link
-                href="https://www.instagram.com/naseem_khan005/"
+                href=""
                 target="_blank"
               >
                 <InstagramIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />

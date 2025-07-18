@@ -45,19 +45,19 @@ const Team = () => {
         Driven By Teamwork
       </h2>
 
-      <div className="grid grid-cols-2 mx-auto mt-16 lg:grid-cols-3 gap-y-8 sm:gap-8">
+      <div className="grid grid-cols-2 mx-auto mt-16 lg:grid-cols-2 gap-y-8 sm:gap-8">
         <TeamCard
           imgSrc={"/team/1.png"}
-          name="Shivam Goyal"
+          name="Satyam Goyal"
           title="CEO and Founder"
         />
-        <TeamCard imgSrc={"/team/2.png"} name="Satyam Goyal" title="Founder" />
-        <TeamCard
+        <TeamCard imgSrc={"/team/2.png"} name="Shivam Goyal" title="Founder" />
+        {/* <TeamCard
           imgSrc={"/team/3.png"}
           name="Aaron Nunez"
           title="Web Designer"
-        />
-        <TeamCard
+        /> */}
+        {/* <TeamCard
           imgSrc={"/team/4.png"}
           name="Lina Jutila"
           title="Web Developer"
@@ -71,7 +71,7 @@ const Team = () => {
           imgSrc={"/team/6.png"}
           name="Aaron Nunez"
           title="Web Designer"
-        />
+        /> */}
       </div>
     </section>
   );
