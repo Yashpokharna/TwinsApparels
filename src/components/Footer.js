@@ -1,4 +1,7 @@
 "use client";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -6,166 +9,97 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import Link from "next/link";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Footer = () => {
+  const footerRef = useRef(null);
+  const logoRef = useRef(null);
+  const iconsRef = useRef([]);
+  const copyrightRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Logo: scale and slide from top
+      gsap.from(logoRef.current, {
+        y: -40,
+        scale: 0.9,
+        duration: 1.4,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 150%",
+        },
+      });
+
+      // Icons: rotate and lift one by one
+      gsap.from(iconsRef.current, {
+        y: 30,
+        rotate: 10,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 150%",
+        },
+      });
+
+      // Text: slide from below
+      gsap.from(copyrightRef.current, {
+        y: 20,
+        duration: 1.2,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: "top 150%",
+        },
+        delay: 0.4,
+      });
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <footer className="px-5 py-10 mt-16 border-t border-neutral-200 md:px-16 md:py-16" id="Footer">
-      <div className="container flex flex-col items-center mx-auto"> 
+    <footer
+      ref={footerRef}
+      className="px-5 py-10 mt-16 border-t border-neutral-200 md:px-16 md:py-16"
+      id="Footer"
+    >
+      <div className="container flex flex-col items-center mx-auto">
         <div className="items-center">
           <div className="flex flex-col items-center justify-center">
-            <div>
-              <Link href={"/"} className="items-center text-3xl">
+            <div ref={logoRef}>
+              <Link href={"/"} className="items-center text-3xl font-semibold">
                 <span className="text-rose-600">Twins</span>Apparels.
               </Link>
             </div>
-            <div className="mt-8 space-x-6">
-              <Link
-                href=""
-                target="_blank"
-              >
-                <FacebookOutlinedIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
-              </Link>
-              <Link href="" target="_blank">
-                <GitHubIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
-              </Link>
-              <Link
-                href=""
-                target="_blank"
-              >
-                <LinkedInIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
-              </Link>
-              <Link href="" target="_blank">
-                <TwitterIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
-              </Link>
-              <Link
-                href=""
-                target="_blank"
-              >
-                <InstagramIcon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
-              </Link>
+
+            <div className="flex justify-center mt-8 space-x-6">
+              {[
+                { href: "", Icon: FacebookOutlinedIcon },
+                { href: "", Icon: GitHubIcon },
+                { href: "", Icon: LinkedInIcon },
+                { href: "", Icon: TwitterIcon },
+                { href: "", Icon: InstagramIcon },
+              ].map(({ href, Icon }, i) => (
+                <Link
+                  key={i}
+                  href={href}
+                  target="_blank"
+                  ref={(el) => (iconsRef.current[i] = el)}
+                >
+                  <Icon className="transition-all hover:text-rose-600 hover:-translate-y-1" />
+                </Link>
+              ))}
             </div>
           </div>
-
-          {/* <div className="grid grid-cols-2 gap-8 lg:col-span-2 md:grid-cols-4">
-            <div>
-              <p className="font-medium">Company</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm">
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Meet the Team
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  History
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Careers
-                </Link>
-              </nav>
-            </div>
-            <div>
-              <p className="font-medium">Services</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm ">
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Coaching
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Company Review
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Accounts Review
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  HR Consulting
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  SEO Optimisation
-                </Link>
-              </nav>
-            </div>
-            <div>
-              <p className="font-medium">Helpful Links</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm ">
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Contact
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  FAQs
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Live Chat
-                </Link>
-              </nav>
-            </div>
-            <div>
-              <p className="font-medium">Legal</p>
-              <nav className="flex flex-col mt-4 space-y-2 text-sm ">
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Terms &amp; Conditions
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Returns Policy
-                </Link>
-                <Link
-                  href="/"
-                  className="hover:opacity-75 hover:border-b hover:border-neutral-400 w-fit"
-                >
-                  Accessibility
-                </Link>
-              </nav>
-            </div>
-          </div> */}
         </div>
+
         <div>
-        <p className="mt-8 text-sm items-cente">© 2025 TwinsApparels - All rights reserved</p>
+          <p className="mt-8 text-sm text-center" ref={copyrightRef}>
+            © 2025 TwinsApparels - All rights reserved
+          </p>
         </div>
       </div>
     </footer>
