@@ -32,8 +32,8 @@ To run this project locally:
 
 ```bash
 # Clone the repo
-git clone https://github.com/Yashpokharna/twin-apparels.git
-cd twin-apparels
+git clone https://github.com/Yashpokharna/TwinsApparels.git
+cd TwinsApparels
 
 # Install dependencies
 npm install
