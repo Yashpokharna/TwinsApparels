@@ -2,7 +2,7 @@
 
 Twin Apparels is a modern, responsive website built for a textile manufacturing business. It showcases the factory's production workflow, community values, leadership team, and digital presence with interactive animations and clean UI/UX design.
 
-🔗 **Live Site**: [https://twinsapparels.in/]([https://twinsapparels.in/](https://twinsapparels.netlify.app/))
+🔗 **Live Site**: [https://twinsapparels.in/]([https://twinsapparels.in/])
 
 ---
 
