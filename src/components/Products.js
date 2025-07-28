@@ -130,7 +130,7 @@ const Products = () => {
         <QualityFeature
           imgSrc="/features/2.svg"
           title="Formal Wear"
-          desc="• Men's Formal Trouser • Women Formal Trouser • Men's Formal Shirts • Men & Women Blazer • Uniform Blazer."
+          desc="• Men's Formal Trouser • Women Formal Trouser • Men's Formal Shirts."
           index={0}
         />
         <QualityFeature
@@ -142,7 +142,7 @@ const Products = () => {
         <QualityFeature
           imgSrc="/features/1.svg"
           title="Uniform & Workwear"
-          desc="• Uniform/Cargo Pants/Work Wear • Uniform Blazer"
+          desc="• Uniform/Cargo Pants/Work Wear."
           index={2}
         />
         <QualityFeature
