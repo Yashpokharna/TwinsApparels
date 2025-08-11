@@ -35,7 +35,7 @@ const About = () => {
             scale: 0.9,
             opacity: 0,
             y: 20,
-            duration: 1,       // slower button animation
+            duration: 1,       
           },
           "-=0.6"
         )
