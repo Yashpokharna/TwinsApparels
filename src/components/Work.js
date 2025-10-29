@@ -139,7 +139,8 @@ const Work = () => {
   };
 
   return (
-    <section className="w-full bg-rose-500 text-white bg-[url('/work/workbg.png')] bg-cover bg-no-repeat bg-center">
+    <section className="w-full bg-rose-500 text-white bg-[url('/work/workbg.png')] bg-cover bg-no-repeat bg-center"
+    id="Operations">
       <div className="container flex flex-col gap-10 px-5 py-12 text-center lg:gap-16 md:px-16 sm:py-20 md:py-36">
         <div ref={sectionTitleRef}>
           <span className="block text-lg font-semibold tracking-widest text-center uppercase">

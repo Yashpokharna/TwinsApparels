@@ -8,6 +8,15 @@ body {
   @apply font-sans;
 }
 
+@keyframes floatThread {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(50%);
+  }
+}
+
 
 body {
   overflow-x: hidden;

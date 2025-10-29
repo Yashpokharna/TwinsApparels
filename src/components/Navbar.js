@@ -5,22 +5,16 @@ import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import LightModeRoundedIcon from "@mui/icons-material/LightModeRounded";
 import { useEffect, useRef, useState } from "react";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 
 const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const navbar = useRef();
 
-  const navLinks = ["Home", "About", "Machinery", "Products", "Team"];
+  const navLinks = ["Home", "About", "Products","Machinery", "Operations", "Team", "Contact"];
 
   useEffect(() => {
-    setMounted(true);
     window.onscroll = () => {
       if (window.pageYOffset >= 200) {
         navbar.current.classList.add("shadow");
@@ -30,16 +24,12 @@ const Navbar = () => {
     };
   }, []);
 
-  if (!mounted) return null;
-
   return (
     <div
       ref={navbar}
-      className={`${
-        theme === "dark" ? "bg-[#121212]" : "bg-white text-black"
-      } w-full z-50 fixed top-0 left-0 py-4 `}
+      className="fixed top-0 left-0 z-50 w-full py-4 text-black bg-white"
     >
-      <div className="container relative flex items-center justify-between px-5 mx-auto md:px-16">
+      <div className="container flex items-center justify-between px-5 mx-auto md:px-16">
         {/* Logo */}
         <Link href="/">
           <h2 className="text-3xl font-medium cursor-pointer">
@@ -47,60 +37,42 @@ const Navbar = () => {
           </h2>
         </Link>
 
-        {/* Centered nav links */}
-        <div className="absolute hidden transform -translate-x-1/2 -translate-y-1/2 md:block left-1/2 top-1/2">
-          <ul className="flex gap-5 lg:gap-10">
+        {/* Right-aligned nav links */}
+        <div className="items-center hidden gap-10 md:flex">
+          <ul className="flex gap-8 lg:gap-12">
             {navLinks.map((link) => (
-              <li key={link}>
+              <li key={link} className="relative group">
                 <a
                   href={`#${link}`}
                   className="transition-colors duration-300 hover:text-rose-600"
                 >
                   {link}
                 </a>
+                {/* Underline hover effect */}
+                <span className="absolute left-1/2 -translate-x-1/2 bottom-0 w-0 h-[2px] bg-rose-600 transition-all duration-300 group-hover:w-full"></span>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Theme & Menu Button */}
-        <div className="flex items-center gap-4">
-          <button>
-            {theme === "dark" ? (
-              <LightModeRoundedIcon
-                onClick={() => setTheme("light")}
-                className="text-white"
-              />
-            ) : (
-              <DarkModeOutlinedIcon onClick={() => setTheme("dark")} />
-            )}
-          </button>
-
-          {/* Hamburger */}
-          <button
-            aria-label="menu"
-            className={`${
-              theme === "dark" ? "text-white" : "text-black"
-            } md:hidden`}
-            onClick={() => setToggleMenu(true)}
-          >
-            <MenuIcon />
-          </button>
-        </div>
+        {/* Hamburger Menu (Mobile) */}
+        <button
+          aria-label="menu"
+          className="text-black md:hidden"
+          onClick={() => setToggleMenu(true)}
+        >
+          <MenuIcon />
+        </button>
       </div>
 
       {/* Mobile Menu */}
       <div
         className={`${
           toggleMenu ? "left-0" : "-left-full"
-        } fixed top-0 z-50 w-80 h-screen transition-all duration-500 ${
-          theme === "dark" ? "bg-[#121212] text-white" : "bg-white text-black"
-        } flex flex-col gap-5 py-24 px-10 shadow-2xl md:hidden`}
+        } fixed top-0 z-50 w-80 h-screen transition-all duration-500 bg-white text-black flex flex-col gap-5 py-24 px-10 shadow-2xl md:hidden`}
       >
         <button
-          className={`${
-            theme === "dark" ? "text-white" : "text-black"
-          } absolute top-6 right-5`}
+          className="absolute text-black top-6 right-5"
           onClick={() => setToggleMenu(false)}
         >
           <CloseOutlinedIcon />
@@ -118,7 +90,7 @@ const Navbar = () => {
           </li>
         ))}
 
-        {/* Social Links */}
+        {/* Social Links — only in mobile menu */}
         <div className="absolute flex gap-3 mx-auto -translate-x-1/2 bottom-16 left-1/2">
           <a
             href="https://www.facebook.com/profile.php?id=100017192357822&sk"
@@ -128,17 +100,14 @@ const Navbar = () => {
           </a>
           <a
             target="_blank"
-            href="https://www.linkedin.com/in/naseem-khan-275275258/"
+            href=""
           >
             <LinkedInIcon className="text-xl cursor-pointer hover:text-rose-600" />
           </a>
-          <a target="_blank" href="https://github.com/NaseemKhan005/">
+          <a target="_blank" href="">
             <GitHubIcon className="text-xl cursor-pointer hover:text-rose-600" />
           </a>
-          <a
-            target="_blank"
-            href="https://www.instagram.com/naseem_khan005/"
-          >
+          <a target="_blank" href="">
             <InstagramIcon className="text-xl cursor-pointer hover:text-rose-600" />
           </a>
         </div>
