@@ -147,14 +147,14 @@ const Footer = () => {
             © 2025 TwinsApparels — All rights reserved
           </p>
           <p className="mt-2 text-md text-rose-100">
-            Made with 🤍 by{" "}
+            A Project by{" "}
             <Link
               href="https://yashpokharna.in/"
               target="_blank"
               rel="noopener noreferrer"
               className="transition-colors hover:text-white hover:underline"
             >
-              Yash Pokharna
+              Yash Pokharna💻.
             </Link>
           </p>
         </div>
