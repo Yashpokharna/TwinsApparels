@@ -20,7 +20,6 @@ const Footer = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Logo animation
       gsap.from(logoRef.current, {
         y: -40,
         scale: 0.9,
@@ -32,7 +31,6 @@ const Footer = () => {
         },
       });
 
-      // Icons animation
       gsap.from(iconsRef.current, {
         y: 30,
         rotate: 10,
@@ -45,7 +43,6 @@ const Footer = () => {
         },
       });
 
-      // Text animation
       gsap.from(copyrightRef.current, {
         y: 20,
         duration: 1,
@@ -67,7 +64,7 @@ const Footer = () => {
       className="relative px-5 py-10 mt-16 overflow-hidden text-white border-t border-rose-300/30 md:px-16 md:py-16 bg-rose-600"
       id="Footer"
     >
-      {/* ✅ Seamless never-ending background animation */}
+      {/* Background animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="flex w-[200%] h-full">
           {/* first strip */}
@@ -75,7 +72,7 @@ const Footer = () => {
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               repeat: Infinity,
-              duration: 150, // 🐢 slower, smooth and continuous
+              duration: 150,
               ease: "linear",
             }}
             className="flex items-center h-full whitespace-nowrap will-change-transform"
@@ -95,7 +92,7 @@ const Footer = () => {
             animate={{ x: ["0%", "-50%"] }}
             transition={{
               repeat: Infinity,
-              duration: 150, // 🐢 same speed as above
+              duration: 150,
               ease: "linear",
             }}
             className="flex items-center h-full whitespace-nowrap will-change-transform"
@@ -144,12 +141,21 @@ const Footer = () => {
           </div>
         </div>
 
-        <div>
-          <p
-            className="mt-8 text-sm text-center text-rose-100"
-            ref={copyrightRef}
-          >
+        {/* Copyright + Made with line */}
+        <div className="mt-8 text-center" ref={copyrightRef}>
+          <p className="text-sm text-rose-100">
             © 2025 TwinsApparels — All rights reserved
+          </p>
+          <p className="mt-2 text-md text-rose-100">
+            Made with 🤍 by{" "}
+            <Link
+              href="https://yashpokharna.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-colors hover:text-white hover:underline"
+            >
+              Yash Pokharna
+            </Link>
           </p>
         </div>
       </div>
