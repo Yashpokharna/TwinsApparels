@@ -25,7 +25,11 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    'Home', 'Products', 'About Us', 'Quality', 'Contact'
+    { name: 'Home', href: '#Home' },
+    { name: 'About Us', href: '#About' },
+    { name: 'Products', href: '#Products' },
+    { name: 'Machinery', href: '#Machinery' },
+    { name: 'Contact', href: '#Contact' }
   ];
 
   return (
@@ -164,13 +168,13 @@ const Footer = () => {
                   {quickLinks.map((link, idx) => (
                     <li key={idx}>
                       <Link 
-                        href={`#${link.toLowerCase().replace(' ', '-')}`}
+                        href={link.href}
                         className="inline-flex items-center gap-2 text-lg font-medium transition-all text-rose-50 hover:text-white hover:gap-3 group"
                       >
                         <span className="flex items-center justify-center w-8 h-8 transition-colors rounded-lg bg-white/20 group-hover:bg-white/30">
                           →
                         </span>
-                        {link}
+                        {link.name}
                       </Link>
                     </li>
                   ))}
