@@ -29,7 +29,7 @@ const Contact = () => {
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
       ),
       title: "Visit Us",
-      details: ["Hamirgarh, Bhilwara", "Rajasthan, India"],
+      details: ["Riico Growth Center, G-1-158, Hamirgarh, Bhilwara, Rajasthan 311025"],
       gradient: "from-rose-500 to-purple-500",
       link: "https://maps.google.com/?q=Hamirgarh,Bhilwara,Rajasthan",
     },
@@ -47,7 +47,7 @@ const Contact = () => {
         <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
       ),
       title: "Email Us",
-      details: ["admin@twinsapparels.in", "We reply within 24 hours"],
+      details: ["connect@twinsapparels.in", "We reply within 24 hours"],
       gradient: "from-purple-500 to-rose-500",
       link: "mailto:info@twinsapparels.com",
     },
@@ -93,12 +93,12 @@ const Contact = () => {
             >
               {/* Glow effect */}
               <div className={`absolute inset-0 bg-gradient-to-br ${info.gradient} rounded-2xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`}></div>
-              
+
               {/* Card */}
               <div className="relative p-8 overflow-hidden transition-all duration-500 bg-white border shadow-lg rounded-2xl group-hover:shadow-2xl border-slate-100 group-hover:border-transparent">
                 {/* Decorative corner */}
                 <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${info.gradient} opacity-5 rounded-bl-full transform group-hover:scale-150 transition-transform duration-700`}></div>
-                
+
                 {/* Icon */}
                 <div className="relative mb-6">
                   <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${info.gradient} shadow-lg transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
@@ -155,7 +155,7 @@ const Contact = () => {
           <div className="relative group">
             {/* Map glow */}
             <div className="absolute inset-0 transition-opacity duration-500 bg-gradient-to-br from-rose-500 via-purple-500 to-blue-500 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30"></div>
-            
+
             {/* Map container */}
             <div className="relative overflow-hidden bg-white border shadow-2xl rounded-3xl border-slate-100">
               {/* Map header */}
@@ -180,11 +180,12 @@ const Contact = () => {
                     </p>
                   </div>
                   <a
-                    href="https://maps.google.com/?q=Hamirgarh,Bhilwara,Rajasthan"
+                    href="https://maps.google.com/?q=Riico+Growth+Center,+G-1-158,+Hamirgarh,+Swaroopganj,+Bhilwara,+Rajasthan+311025"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-all duration-300 transform shadow-lg bg-gradient-to-r from-rose-600 to-purple-600 rounded-xl hover:shadow-xl hover:-translate-y-1"
                   >
+
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -212,7 +213,7 @@ const Contact = () => {
                   referrerPolicy="no-referrer-when-downgrade"
                   className="grayscale-[20%] hover:grayscale-0 transition-all duration-500"
                 ></iframe>
-                
+
                 {/* Corner decorations */}
                 <div className="absolute bottom-0 left-0 w-20 h-20 pointer-events-none bg-gradient-to-tr from-rose-500/20 to-transparent"></div>
                 <div className="absolute top-0 right-0 w-20 h-20 pointer-events-none bg-gradient-to-bl from-blue-500/20 to-transparent"></div>
