@@ -13,7 +13,7 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const navbar = useRef();
 
-  const navLinks = ["Home", "About", "Products", "Machinery", "Operations", "Team", "Contact "];
+  const navLinks = ["Home", "About", "Products", "Machinery", "Team", "Contact "];
 
   useEffect(() => {
     window.onscroll = () => {
