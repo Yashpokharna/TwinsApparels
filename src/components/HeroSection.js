@@ -228,11 +228,6 @@ const HeroSection = () => {
           </a>
         </div>
       </div>
-
-      {/* Hint text for interaction */}
-      <div className="absolute z-20 text-sm text-gray-400 transform -translate-x-1/2 bottom-10 left-1/2 animate-pulse">
-        Move your cursor to see the magic
-      </div>
     </section>
   );
 };
