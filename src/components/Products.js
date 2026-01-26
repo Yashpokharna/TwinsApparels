@@ -119,45 +119,58 @@ const Products = () => {
   const [activeCard, setActiveCard] = useState(null);
 
   const products = [
-    {
-      imgSrc: "/features/2.svg",
-      title: "Formal Wear",
-      items: [
-        "Men's Formal Trouser",
-        "Women Formal Trouser",
-        "Men's Formal Shirts"
-      ]
-    },
-    {
-      imgSrc: "/features/3.svg",
-      title: "Casual Wear",
-      items: [
-        "Men's Cotton Trouser",
-        "Chinos",
-        "Men's Five Pocket",
-        "Men's Flexi Waist Trouser",
-        "Draw Cord Trouser",
-        "Men's Casual Shirts",
-        "Shorts for Men & Women"
-      ]
-    },
-    {
-      imgSrc: "/features/1.svg",
-      title: "Uniform & Workwear",
-      items: [
-        "Uniform/Cargo Pants/Work Wear"
-      ]
-    },
-    {
-      imgSrc: "/features/4.svg",
-      title: "Stretch & Comfort Wear",
-      items: [
-        "Men's Flexi Waist Trouser",
-        "Draw Cord Trouser",
-        "Shorts for Men & Women"
-      ]
-    }
-  ];
+  {
+    imgSrc: "/features/2.svg",
+    title: "Formal Wear",
+    items: [
+      "Men's Formal Trousers",
+      "Men's Power-Stretch Pants (Flexi)",
+      "Men's Chinos",
+      "Women's Tailored Fit",
+      "Women's Slim Fit",
+      "Women's Super Slim Fit",
+      "Women's Straight Fit"
+    ]
+  },
+  {
+    imgSrc: "/features/3.svg",
+    title: "Casual Wear",
+    items: [
+      "Men's Baggy Jeans",
+      "Men's Korean Pintuck Pants",
+      "Men's Shorts",
+      "Women's Barrel Fit",
+      "Women's Bootcut",
+      "Women's Flared",
+      "Women's Skinny Fit",
+      "Women's Regular Fit",
+      "Women's Relaxed Fit",
+      "Women's Mom Fit"
+    ]
+  },
+  {
+    imgSrc: "/features/1.svg",
+    title: "Active & Utility Wear",
+    items: [
+      "Men's Cargos",
+      "Men's Travel Pants",
+      "Men's Sweatpants & Joggers",
+      "Women's Joggers",
+      "Women's Tapered Fit"
+    ]
+  },
+  {
+    imgSrc: "/features/4.svg",
+    title: "Comfort & Lounge Wear",
+    items: [
+      "Men's Lounge Pants",
+      "Women's Loose Fit",
+      "Women's Baggy Fit",
+      "Women's Wide Leg",
+      "Women's Straight"
+    ]
+  }
+];
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -234,7 +247,7 @@ const Products = () => {
           <div className="text-sm text-gray-600">Categories</div>
         </div>
         <div className="p-6 text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
-          <div className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl">15+</div>
+          <div className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl">25+</div>
           <div className="text-sm text-gray-600">Product Types</div>
         </div>
         <div className="p-6 text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
