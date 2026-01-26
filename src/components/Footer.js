@@ -206,7 +206,7 @@ const Footer = () => {
               </div>
 
               {/* Creator Credit */}
-              <div className="pt-4 border-t border-white/20">
+              {/* <div className="pt-4 border-t border-white/20">
                 <p className="mb-2 text-sm text-rose-100">
                   A Product By
                 </p>
@@ -217,7 +217,7 @@ const Footer = () => {
                 >
                   Yash Pokharna 💻
                 </Link>
-              </div>
+              </div> */}
             </div>
           </div>
 
