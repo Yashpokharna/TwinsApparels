@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
@@ -12,7 +13,7 @@ const Navbar = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const navbar = useRef();
 
-  const navLinks = ["Home", "About", "Products","Machinery", "Operations", "Team", "Contact "];
+  const navLinks = ["Home", "About", "Products", "Machinery", "Operations", "Team", "Contact "];
 
   useEffect(() => {
     window.onscroll = () => {
@@ -31,11 +32,17 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between px-5 mx-auto md:px-16">
         {/* Logo */}
+        <div className="-mt-3">
         <Link href="/">
-          <h2 className="text-3xl font-medium cursor-pointer">
-            <span className="text-rose-600">Twins</span>Apparels.
-          </h2>
+          <Image
+            src="/name2.jpeg"        // put your logo inside /public
+            alt="Twins Apparels"
+            width={180}            // adjust as needed
+            height={90}
+            priority
+          />
         </Link>
+        </div>
 
         {/* Right-aligned nav links */}
         <div className="items-center hidden gap-10 md:flex">
@@ -67,9 +74,8 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`${
-          toggleMenu ? "left-0" : "-left-full"
-        } fixed top-0 z-50 w-80 h-screen transition-all duration-500 bg-white text-black flex flex-col gap-5 py-24 px-10 shadow-2xl md:hidden`}
+        className={`${toggleMenu ? "left-0" : "-left-full"
+          } fixed top-0 z-50 w-80 h-screen transition-all duration-500 bg-white text-black flex flex-col gap-5 py-24 px-10 shadow-2xl md:hidden`}
       >
         <button
           className="absolute text-black top-6 right-5"
