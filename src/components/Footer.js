@@ -211,7 +211,7 @@ const Footer = () => {
                   A Product By
                 </p>
                 <Link 
-                  href="https://yashpokharna.in/" 
+                  href="https://yashpokharna.com/" 
                   target="_blank"
                   className="inline-block text-xl font-bold text-white transition-all link-item hover:text-rose-100"
                 >
