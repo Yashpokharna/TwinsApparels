@@ -5,6 +5,16 @@
 @layer base {
   :root {
     --shell-x: 1.5rem;
+    /* Condensed header height, and the breathing room we want beneath it when
+       an anchor jump lands. Read by both the CSS below and SmoothScroll.
+       Deliberately in px, not rem: SmoothScroll parseFloat()s these, and
+       "4rem" would parse as 4. calc() mixes the units fine.
+
+       The header's height changes with breakpoint — the hamburger sets it
+       below lg, the wordmark between lg and xl, the quote button above xl —
+       so this tracks it rather than using one worst-case number. */
+    --nav-h: 64px;
+    --anchor-gap: 32px;
     /* Intro timing lives here so the CSS animation and the JS that unlocks
        scrolling can't drift apart. Keep ClientWrapper's INTRO_MS in sync. */
     --intro-hold: 2200ms;
@@ -17,9 +27,16 @@
     }
   }
 
+  @media (min-width: 1024px) {
+    :root {
+      --nav-h: 48px;
+    }
+  }
+
   @media (min-width: 1280px) {
     :root {
       --shell-x: 4rem;
+      --nav-h: 60px;
     }
   }
 
@@ -50,7 +67,33 @@
   /* Fallback for when Lenis is disabled (reduced motion / no JS) */
   html:not(.lenis) {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+  }
+
+  /*
+   * Native anchor jumps align the section's padding box, so the heading ends
+   * up a long way below the header. scroll-margin-top pulls the landing point
+   * down past that padding — it goes negative once the section's own padding
+   * exceeds the header, which is exactly what we want.
+   *
+   * SmoothScroll does the same sum in JS for the Lenis path, reading the two
+   * custom properties above so the two agree.
+   */
+  html:not(.lenis) section[id] {
+    scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap) - 6rem);
+  }
+
+  @media (min-width: 768px) {
+    html:not(.lenis) section[id] {
+      scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap) - 9rem);
+    }
+  }
+
+  /* Process drops to lg:py-0 for its pinned horizontal scroll, so there is no
+     padding to compensate for at that width. */
+  @media (min-width: 1024px) {
+    html:not(.lenis) #process {
+      scroll-margin-top: calc(var(--nav-h) + var(--anchor-gap));
+    }
   }
 
   ::selection {

@@ -6,7 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useReveal } from "@/lib/useReveal";
 import { prefersReducedMotion } from "@/lib/capability";
 import SplitLines from "@/components/anim/SplitLines";
-import { SITE, NAV, SOCIAL } from "@/lib/site";
+import { SITE, NAV } from "@/lib/site";
 
 export default function Footer() {
   const scopeRef = useReveal({ stagger: 0.05 });
@@ -91,11 +91,11 @@ export default function Footer() {
       </section>
 
       {/* ---------------------------------------------------------------- *
-       * Details. Four even columns so the right-hand side doesn't strand
-       * a block of empty space the way a 1.4/1/1 split did.
+       * Details. Three even columns, so nothing strands a block of empty
+       * space the way the original 1.4/1/1 split did.
        * ---------------------------------------------------------------- */}
-      <section className="shell grid gap-12 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-4 lg:gap-10">
-        <div data-reveal className="lg:col-span-1">
+      <section className="shell grid gap-12 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-3 lg:gap-12">
+        <div data-reveal>
           <h2 className="text-[10px] uppercase tracking-label text-ink-faint">
             Contact
           </h2>
@@ -154,36 +154,6 @@ export default function Footer() {
             ))}
           </ul>
         </nav>
-
-        <div data-reveal>
-          <h2 className="text-[10px] uppercase tracking-label text-ink-faint">
-            Elsewhere
-          </h2>
-          <ul className="mt-6 flex flex-col gap-3">
-            {SOCIAL.map((social) => (
-              <li key={social.name}>
-                <a
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-ink-dim transition-colors duration-300 hover:text-clay"
-                >
-                  {social.name} ↗
-                </a>
-              </li>
-            ))}
-            <li>
-              <a
-                href="/Catalogue.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-ink-dim transition-colors duration-300 hover:text-clay"
-              >
-                Catalogue (PDF) ↗
-              </a>
-            </li>
-          </ul>
-        </div>
       </section>
 
       {/* ---------------------------------------------------------------- *
