@@ -1,89 +1,87 @@
-import { useEffect, useRef } from "react";
+"use client";
 
-const Community = () => {
-  const cardsRef = useRef([]);
+import { useReveal } from "@/lib/useReveal";
+import SplitLines from "@/components/anim/SplitLines";
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0)";
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
+const VALUES = [
+  {
+    index: "01",
+    title: "Consistency at volume",
+    body: "The tenth thousand garment matches the first. Fixed operations per station, spec checks before packing, and shade banding on every roll.",
+  },
+  {
+    index: "02",
+    title: "Responsible production",
+    body: "Fair hours for 110+ people, efficient marker planning to cut fabric waste, and steam recovered from a single central boiler.",
+  },
+  {
+    index: "03",
+    title: "Built to a tech pack",
+    body: "Bring a spec and we grade to it. No substituted trims, no silent block changes, no surprises at dispatch.",
+  },
+];
 
-    cardsRef.current.forEach((card) => {
-      if (card) observer.observe(card);
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  const values = [
-    {
-      icon: "⚙️",
-      title: "Quality Manufacturing",
-      description: "State-of-the-art machinery and skilled workforce delivering consistent, high-quality textiles.",
-      gradient: "from-blue-500 to-blue-600"
-    },
-    {
-      icon: "🌿",
-      title: "Sustainable Production",
-      description: "Eco-friendly processes and responsible sourcing to minimize environmental impact.",
-      gradient: "from-emerald-500 to-emerald-600"
-    },
-    {
-      icon: "🚀",
-      title: "Innovation & Technology",
-      description: "Advanced textile solutions combining traditional craftsmanship with modern innovation.",
-      gradient: "from-purple-500 to-purple-600"
-    }
-  ];
+export default function Community() {
+  const scopeRef = useReveal();
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white to-slate-50">
-      <div className="container max-w-6xl px-6 mx-auto">
-        
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <h2 className="mb-4 text-4xl font-bold text-slate-900">
-            Our <span className="text-rose-600">Values</span>
-          </h2>
-          <p className="max-w-2xl mx-auto text-slate-600">
-            Building excellence through quality, sustainability, and innovation
-          </p>
-        </div>
+    <section
+      ref={scopeRef}
+      aria-label="How we work"
+      className="relative py-24 md:py-36"
+    >
+      <div className="shell">
+        <div className="grid gap-14 lg:grid-cols-[0.36fr_0.64fr] lg:gap-20">
+          <div>
+            <p data-reveal className="eyebrow mb-8">
+              How we work
+            </p>
+            <SplitLines className="display text-[clamp(2.4rem,5.5vw,4.6rem)] text-ink">
+              Three
+              <br />
+              <span className="text-clay">commitments</span>
+            </SplitLines>
 
-        {/* Cards Grid */}
-        <div className="grid gap-8 md:grid-cols-3">
-          {values.map((value, index) => (
             <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className="p-8 transition-all duration-500 transform translate-y-8 bg-white shadow-lg opacity-0 rounded-2xl hover:shadow-xl hover:-translate-y-1"
-              style={{ transitionDelay: `${index * 150}ms` }}
+              data-reveal
+              className="mt-10 hidden aspect-[4/3] overflow-hidden bg-paper-raised lg:block"
             >
-              <div className={`inline-flex items-center justify-center w-14 h-14 mb-5 text-2xl bg-gradient-to-br ${value.gradient} rounded-xl shadow-md`}>
-                <span className="filter brightness-0 invert">{value.icon}</span>
-              </div>
-              
-              <h3 className="mb-3 text-xl font-bold text-slate-900">
-                {value.title}
-              </h3>
-              
-              <p className="leading-relaxed text-slate-600">
-                {value.description}
-              </p>
+              <img
+                src="/filo/lifestyle-2.jpg"
+                alt="Finished garments from the Twins Apparels line"
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-cover transition-transform duration-[1.2s] ease-editorial hover:scale-105"
+              />
             </div>
-          ))}
+          </div>
+
+          <ul className="border-t border-ink/10">
+            {VALUES.map((value) => (
+              <li
+                key={value.index}
+                data-reveal
+                className="group border-b border-ink/10 py-9"
+              >
+                <div className="flex gap-6 md:gap-10">
+                  <span className="pt-1 text-[10px] tracking-label text-clay">
+                    {value.index}
+                  </span>
+
+                  <div>
+                    <h3 className="font-display text-2xl font-bold uppercase tracking-tightest text-ink transition-colors duration-300 group-hover:text-clay md:text-3xl">
+                      {value.title}
+                    </h3>
+                    <p className="mt-4 max-w-[54ch] text-sm leading-[1.85] text-ink-dim md:text-base">
+                      {value.body}
+                    </p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
   );
-};
-
-export default Community;
+}

@@ -1,140 +1,17 @@
 "use client";
 
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState } from "react";
+import { useReveal } from "@/lib/useReveal";
+import SplitLines from "@/components/anim/SplitLines";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const ProductCard = ({ imgSrc, title, items, index, isActive, onClick }) => {
-  const cardRef = useRef(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-
-    gsap.fromTo(card,
-      { opacity: 0, y: 60, rotationY: -15 },
-      {
-        opacity: 1,
-        y: 0,
-        rotationY: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        delay: index * 0.15,
-        scrollTrigger: {
-          trigger: card,
-          start: "top 90%",
-          toggleActions: "play none none none"
-        }
-      }
-    );
-  }, [index]);
-
-  return (
-    <div
-      ref={cardRef}
-      onClick={onClick}
-      className={`relative group cursor-pointer rounded-2xl overflow-hidden transition-all duration-500 ${
-        isActive ? 'lg:col-span-2 lg:row-span-2' : ''
-      }`}
-    >
-      {/* Background gradient */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${
-        index === 0 ? 'from-blue-500 to-blue-700' :
-        index === 1 ? 'from-rose-500 to-rose-700' :
-        index === 2 ? 'from-purple-500 to-purple-700' :
-        'from-emerald-500 to-emerald-700'
-      } transition-all duration-500`} />
-      
-      {/* Overlay on hover */}
-      <div className="absolute inset-0 transition-all duration-300 bg-black/0 group-hover:bg-black/10" />
-
-      {/* Content */}
-      <div className={`relative z-10 p-6 md:p-8 h-full flex flex-col ${
-        isActive ? 'justify-between' : 'justify-center'
-      }`}>
-        {/* Icon */}
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex items-center justify-center w-16 h-16 transition-transform duration-300 md:w-20 md:h-20 bg-white/20 backdrop-blur-sm rounded-xl group-hover:scale-110">
-            <Image src={imgSrc} width={isActive ? 50 : 40} height={isActive ? 50 : 40} alt={title} className="brightness-0 invert" />
-          </div>
-          {isActive && (
-            <div className="hidden lg:block">
-              <svg className="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-              </svg>
-            </div>
-          )}
-        </div>
-
-        {/* Title */}
-        <h3 className={`font-bold text-white mb-4 transition-all duration-300 ${
-          isActive ? 'text-2xl md:text-4xl' : 'text-xl md:text-2xl'
-        }`}>
-          {title}
-        </h3>
-
-        {/* Items list */}
-        <ul className={`space-y-2 text-white/90 transition-all duration-300 ${
-          isActive ? 'text-base md:text-lg' : 'text-sm md:text-base'
-        }`}>
-          {items.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2">
-              <span className="mt-1.5 flex-shrink-0">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Hover indicator */}
-        {!isActive && (
-          <div className="flex items-center gap-2 mt-6 text-sm transition-colors text-white/80 group-hover:text-white">
-            <span>Click to expand</span>
-            <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </div>
-        )}
-      </div>
-
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 transition-transform duration-700 translate-x-16 -translate-y-16 rounded-full bg-white/5 group-hover:scale-150" />
-      <div className="absolute bottom-0 left-0 w-24 h-24 transition-transform duration-700 -translate-x-12 translate-y-12 rounded-full bg-white/5 group-hover:scale-150" />
-    </div>
-  );
-};
-
-const Products = () => {
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const headingRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const [activeCard, setActiveCard] = useState(null);
-
-  const products = [
+const CATEGORIES = [
   {
-    imgSrc: "/features/2.svg",
-    title: "Formal Wear",
-    items: [
-      "Men's Formal Trousers",
-      "Men's Power-Stretch Pants (Flexi)",
-      "Men's Chinos",
-      "Women's Tailored Fit",
-      "Women's Slim Fit",
-      "Women's Super Slim Fit",
-      "Women's Straight Fit"
-    ]
-  },
-  {
-    imgSrc: "/features/3.svg",
+    id: "casual",
+    index: "01",
     title: "Casual Wear",
+    image: "/filo/product-korean.jpg",
+    blurb:
+      "Relaxed blocks and denim-weight constructions built for everyday wear.",
     items: [
       "Men's Baggy Jeans",
       "Men's Korean Pintuck Pants",
@@ -145,122 +22,200 @@ const Products = () => {
       "Women's Skinny Fit",
       "Women's Regular Fit",
       "Women's Relaxed Fit",
-      "Women's Mom Fit"
-    ]
+      "Women's Mom Fit",
+    ],
   },
   {
-    imgSrc: "/features/1.svg",
-    title: "Active & Utility Wear",
+    id: "formal",
+    index: "02",
+    title: "Formal Wear",
+    image: "/filo/lookbook-1.jpg",
+    blurb:
+      "Structured trousers with clean waistbands, welt pockets and a pressed finish.",
+    items: [
+      "Men's Formal Trousers",
+      "Men's Power-Stretch Pants (Flexi)",
+      "Men's Chinos",
+      "Women's Tailored Fit",
+      "Women's Slim Fit",
+      "Women's Super Slim Fit",
+      "Women's Straight Fit",
+    ],
+  },
+  {
+    id: "active",
+    index: "03",
+    title: "Active & Utility",
+    image: "/filo/product-travel.jpg",
+    blurb:
+      "Bartacked stress points, zip pockets and stretch fabrics for movement.",
     items: [
       "Men's Cargos",
       "Men's Travel Pants",
       "Men's Sweatpants & Joggers",
       "Women's Joggers",
-      "Women's Tapered Fit"
-    ]
+      "Women's Tapered Fit",
+    ],
   },
   {
-    imgSrc: "/features/4.svg",
-    title: "Comfort & Lounge Wear",
+    id: "lounge",
+    index: "04",
+    title: "Comfort & Lounge",
+    image: "/filo/product-linen.jpg",
+    blurb:
+      "Soft handles, elasticated waists and generous drape in linen and blends.",
     items: [
       "Men's Lounge Pants",
       "Women's Loose Fit",
       "Women's Baggy Fit",
       "Women's Wide Leg",
-      "Women's Straight"
-    ]
-  }
+      "Women's Straight",
+    ],
+  },
 ];
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    const title = titleRef.current;
-    const heading = headingRef.current;
-    const subtitle = subtitleRef.current;
+export default function Products() {
+  const scopeRef = useReveal({ stagger: 0.06 });
+  const [active, setActive] = useState(CATEGORIES[0].id);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top 80%",
-        toggleActions: "play none none none"
-      }
-    });
-
-    tl.fromTo(title,
-      { opacity: 0, y: 30, scale: 0.9 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.5)" }
-    )
-    .fromTo(heading,
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-      "-=0.3"
-    )
-    .fromTo(subtitle,
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
-      "-=0.4"
-    );
-
-    // Parallax effect for section
-    gsap.to(section, {
-      y: -30,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: 1
-      }
-    });
-  }, []);
+  const current = CATEGORIES.find((c) => c.id === active) ?? CATEGORIES[0];
 
   return (
-    <section ref={sectionRef} className="container px-5 py-16 mx-auto md:px-16" id="Products">
-      <div className="mb-12 text-center md:mb-16">
-        <span ref={titleRef} className="text-sm font-semibold tracking-wider uppercase service-name text-rose-600">
-          OUR PRODUCTS
-        </span>
-        <h2 ref={headingRef} className="mt-4 mb-4 text-3xl font-bold text-gray-800 md:text-5xl">
-          Style. Comfort. Quality. Always.
-        </h2>
-        <p ref={subtitleRef} className="max-w-2xl mx-auto text-lg text-gray-600">
-          Explore our diverse range of premium textile products
-        </p>
-      </div>
+    <section
+      id="products"
+      ref={scopeRef}
+      className="relative py-24 md:py-36"
+    >
+      <div className="shell">
+        <div className="mb-14 flex flex-col justify-between gap-8 md:flex-row md:items-end">
+          <div>
+            <p data-reveal className="eyebrow mb-8">
+              What we make
+            </p>
+            <SplitLines className="display max-w-[16ch] text-[clamp(2.4rem,5.5vw,4.6rem)] text-ink">
+              Four categories,<span className="text-clay"> 27 fits</span>
+            </SplitLines>
+          </div>
 
-      <div className="grid grid-cols-1 gap-6 mx-auto md:grid-cols-2 lg:grid-cols-4 lg:gap-4 max-w-7xl">
-        {products.map((product, index) => (
-          <ProductCard
-            key={index}
-            {...product}
-            index={index}
-            isActive={activeCard === index}
-            onClick={() => setActiveCard(activeCard === index ? null : index)}
-          />
-        ))}
-      </div>
+          <p data-reveal className="max-w-[38ch] text-sm leading-[1.8] text-ink-dim">
+            Every fit below is a live block we already grade and produce. Bring
+            your own tech pack or start from ours.
+          </p>
+        </div>
 
-      {/* Stats bar */}
-      <div className="grid max-w-4xl grid-cols-2 gap-6 mx-auto mt-16 md:grid-cols-4">
-        <div className="p-6 text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
-          <div className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl">4</div>
-          <div className="text-sm text-gray-600">Categories</div>
-        </div>
-        <div className="p-6 text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
-          <div className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl">25+</div>
-          <div className="text-sm text-gray-600">Product Types</div>
-        </div>
-        <div className="p-6 text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
-          <div className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl">100%</div>
-          <div className="text-sm text-gray-600">Quality</div>
-        </div>
-        <div className="p-6 text-center bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
-          <div className="mb-2 text-3xl font-bold text-gray-800 md:text-4xl">24/7</div>
-          <div className="text-sm text-gray-600">Support</div>
+        {/* Desktop: a persistent preview beside a selectable index.
+            Mobile: the same data as a plain stacked list — no hover required. */}
+        <div className="grid gap-10 lg:grid-cols-[0.44fr_0.56fr] lg:gap-16">
+          {/* The caption sits below the photo rather than on top of it. These
+              are arbitrary product shots — some dark, some bright — so dark
+              text overlaid on them is legible only by luck. */}
+          <div data-reveal className="hidden lg:block">
+            <div className="relative aspect-[4/5] overflow-hidden bg-paper-raised">
+              {CATEGORIES.map((category) => (
+                <img
+                  key={category.id}
+                  src={category.image}
+                  alt={`${category.title} sample`}
+                  loading="lazy"
+                  decoding="async"
+                  // All four stay mounted and cross-fade, so switching never
+                  // triggers a network request or a flash of empty space.
+                  className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-editorial ${
+                    category.id === active ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <div className="border-x border-b border-ink/10 bg-paper px-7 py-6">
+              <span className="text-label uppercase text-clay">
+                {current.index}
+              </span>
+              <h3 className="mt-3 font-display text-3xl font-bold uppercase tracking-tightest text-ink">
+                {current.title}
+              </h3>
+              <p className="mt-3 max-w-[38ch] text-sm leading-relaxed text-ink-dim">
+                {current.blurb}
+              </p>
+            </div>
+          </div>
+
+          <ul className="border-t border-ink/10">
+            {CATEGORIES.map((category) => {
+              const isActive = category.id === active;
+
+              return (
+                <li
+                  key={category.id}
+                  data-reveal
+                  className="border-b border-ink/10"
+                >
+                  <button
+                    type="button"
+                    onMouseEnter={() => setActive(category.id)}
+                    onFocus={() => setActive(category.id)}
+                    onClick={() => setActive(category.id)}
+                    aria-expanded={isActive}
+                    className="group flex w-full items-center gap-5 py-6 text-left"
+                  >
+                    <span
+                      className={`text-[10px] tracking-label transition-colors duration-300 ${
+                        isActive ? "text-clay" : "text-ink-faint"
+                      }`}
+                    >
+                      {category.index}
+                    </span>
+
+                    <span
+                      className={`flex-1 font-display text-2xl font-bold uppercase tracking-tightest transition-colors duration-300 md:text-4xl ${
+                        isActive ? "text-clay" : "text-ink group-hover:text-clay"
+                      }`}
+                    >
+                      {category.title}
+                    </span>
+
+                    <span className="text-xs text-ink-faint">
+                      {category.items.length} fits
+                    </span>
+                  </button>
+
+                  {/* Mobile image: only the active card loads one. */}
+                  <div
+                    className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-editorial lg:hidden ${
+                      isActive ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <img
+                      src={category.image}
+                      alt={`${category.title} sample`}
+                      loading="lazy"
+                      decoding="async"
+                      className="mb-5 h-64 w-full object-cover"
+                    />
+                  </div>
+
+                  <div
+                    className={`overflow-hidden transition-[max-height,opacity] duration-500 ease-editorial ${
+                      isActive ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <ul className="flex flex-wrap gap-2 pb-7">
+                      {category.items.map((item) => (
+                        <li
+                          key={item}
+                          className="border border-ink/12 px-3 py-2 text-xs text-ink-dim"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
     </section>
   );
-};
-
-export default Products;
+}

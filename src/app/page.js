@@ -1,28 +1,27 @@
-"use client";
-import Community from "@/components/Community";
 import HeroSection from "@/components/HeroSection";
-import Team from "@/components/Team";
-import Work from "@/components/Work";
+import Marquee from "@/components/Marquee";
 import About from "@/components/About";
-import Machinery from "@/components/Machinery";
 import Products from "@/components/Products";
+import Process from "@/components/Process";
+import Lookbook from "@/components/Lookbook";
+import Machinery from "@/components/Machinery";
+import Community from "@/components/Community";
+import Team from "@/components/Team";
 import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-16 md:gap-32">
+    <>
       <HeroSection />
-      <About/>
-      {/* <Features /> */}
-      <Products/>
-      <Machinery/>
-      <Work />
+      <Marquee />
+      <About />
+      <Products />
+      <Process />
+      <Lookbook />
+      <Machinery />
       <Community />
       <Team />
-      <Contact/>
-      {/* <Pricing /> */}
-      {/* <Testimonials /> */}
-      {/* <Subscribe /> */}
-    </div>
+      <Contact />
+    </>
   );
 }

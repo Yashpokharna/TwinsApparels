@@ -2,201 +2,340 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap');
-
-body {
-  @apply font-sans;
-}
-
-@keyframes floatThread {
-  0% {
-    transform: translateX(0);
+@layer base {
+  :root {
+    --shell-x: 1.5rem;
+    /* Intro timing lives here so the CSS animation and the JS that unlocks
+       scrolling can't drift apart. Keep ClientWrapper's INTRO_MS in sync. */
+    --intro-hold: 2200ms;
+    --intro-lift: 900ms;
   }
-  100% {
-    transform: translateX(50%);
+
+  @media (min-width: 768px) {
+    :root {
+      --shell-x: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    :root {
+      --shell-x: 4rem;
+    }
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    color-scheme: light;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Lenis drives scrolling; native smooth-scroll would fight it. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* Fallback for when Lenis is disabled (reduced motion / no JS) */
+  html:not(.lenis) {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+  }
+
+  ::selection {
+    @apply bg-clay text-paper;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-paper;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #cfc8bd;
+    border-radius: 99px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b9b1a4;
   }
 }
 
+@layer components {
+  /* Page gutter — one source of truth so every section lines up */
+  .shell {
+    @apply mx-auto w-full max-w-shell;
+    padding-left: var(--shell-x);
+    padding-right: var(--shell-x);
+  }
 
-body {
-  overflow-x: hidden;
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-label font-medium uppercase text-ink-faint;
+  }
+
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 shrink-0 bg-clay;
+  }
+
+  .display {
+    @apply font-display font-bold uppercase leading-[0.86] tracking-tightest;
+  }
+
+  .hairline {
+    @apply h-px w-full border-0 bg-ink/10;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-3 bg-ink px-7 py-4 text-label font-semibold uppercase text-paper
+           transition-colors duration-300 ease-editorial hover:bg-clay hover:text-paper;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-3 border border-ink/25 px-7 py-4 text-label font-semibold
+           uppercase text-ink transition-colors duration-300 ease-editorial hover:border-clay hover:text-clay;
+  }
+
+  .field {
+    @apply w-full border-b border-ink/15 bg-transparent py-3 text-[15px] text-ink
+           outline-none transition-colors duration-300 placeholder:text-ink-faint focus:border-clay;
+  }
 }
 
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
+  /* Fine woven-thread texture, used sparingly behind panels */
+  .weave-texture {
+    background-image: repeating-linear-gradient(
+        90deg,
+        rgba(20, 17, 14, 0.05) 0px,
+        rgba(20, 17, 14, 0.05) 1px,
+        transparent 1px,
+        transparent 4px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        rgba(20, 17, 14, 0.04) 0px,
+        rgba(20, 17, 14, 0.04) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+  }
 
-.service-name {
-  @apply block text-sm font-semibold tracking-widest uppercase text-rose-600;
-}
-
-@keyframes weave {
-  0% {
-    transform: translateX(-100%);
+  /* Elements GSAP reveals on scroll start hidden, but only when JS is driving.
+     .js-ready is set by a blocking inline script in <head>, so there is no
+     flash — and if JS never runs, the content simply stays visible. */
+  .js-ready [data-reveal] {
     opacity: 0;
+    will-change: transform, opacity;
   }
-  50% {
-    transform: translateX(10%);
+
+  /* SplitText runs after fonts.ready, so without this the plain text would
+     paint first and then jump into its masked starting position. Same
+     failsafe as [data-reveal]: if JS never runs, .js-ready is never set and
+     the text simply stays visible. */
+  .js-ready [data-split] {
+    visibility: hidden;
+  }
+
+  .js-ready [data-split].is-split {
+    visibility: visible;
+  }
+
+  .split-word {
+    white-space: nowrap;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Entry animation
+ *
+ * Driven entirely by CSS and present in the server HTML, so it shows from
+ * the very first paint instead of popping in after hydration. JS only
+ * decides whether to skip it (already seen this session) and unlocks
+ * scrolling when it finishes.
+ * ------------------------------------------------------------------ */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: theme("colors.paper");
+  animation: introLift var(--intro-lift) cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-delay: var(--intro-hold);
+}
+
+/* Skipped on repeat views within a session. The attribute is set by the
+   inline script in <head> before first paint, so there is no flash. */
+html[data-intro="skip"] .intro {
+  display: none;
+}
+
+.intro__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.intro__label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: theme("colors.ink-faint");
+  opacity: 0;
+  animation: introFade 500ms ease-out forwards;
+}
+
+/*
+ * The words are stacked in one grid cell rather than masked by a fixed
+ * height. Sizing a mask in `em` against the wrapper is what clipped the
+ * glyphs before: the wrapper inherits 16px while the word renders at 44–76px,
+ * so the mask was roughly a third of the glyph height.
+ */
+.intro__words {
+  position: relative;
+  display: grid;
+  place-items: center;
+  line-height: 1.25;
+}
+
+.intro__word {
+  grid-area: 1 / 1;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 1.25;
+  font-size: clamp(2.75rem, 11vw, 4.75rem);
+  color: theme("colors.ink");
+  white-space: nowrap;
+  opacity: 0;
+  /* Three words share one 1800ms cycle, each offset by 600ms. */
+  animation: introWord 1800ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(400ms + var(--i) * 600ms);
+}
+
+/* The last word holds instead of leaving — it's what the curtain lifts away
+   from, so it must still be on screen when the lift starts. */
+.intro__word:last-child {
+  color: theme("colors.clay");
+  animation-name: introWordLast;
+}
+
+.intro__bar {
+  position: relative;
+  height: 2px;
+  width: min(15rem, 55vw);
+  overflow: hidden;
+  background: rgba(20, 17, 14, 0.12);
+}
+
+.intro__bar i {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: theme("colors.clay");
+  animation: introBar var(--intro-hold) cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes introFade {
+  to {
     opacity: 1;
   }
-  100% {
-    transform: translateX(0%);
-    opacity: 1;
-  }
 }
 
-.animate-weave {
-  animation-name: weave;
-  animation-timing-function: ease-in-out;
-  animation-fill-mode: forwards;
-}
-
-@keyframes thread {
+@keyframes introWord {
   0% {
-    transform: translateX(-100%);
-    opacity: 0.4;
-  }
-  50% {
-    transform: translateX(10%);
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(0%);
-    opacity: 1;
-  }
-}
-
-.animate-thread {
-  animation: thread 1.4s ease-in-out forwards;
-}
-
-@keyframes spin-slow {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spin-slow 2s linear infinite;
-}
-
-@keyframes roller {
-  0% {
-    left: 0%;
-  }
-  100% {
-    left: 100%;
-  }
-}
-
-.animate-roller {
-  animation: roller 1.8s ease-in-out infinite;
-}
-
-@keyframes weave-thread {
-  0% {
-    transform: translateX(-150%);
     opacity: 0;
+    transform: translateY(0.45em);
   }
-  100% {
-    transform: translateX(100%);
+  16%,
+  33% {
     opacity: 1;
+    transform: translateY(0);
   }
-}
-
-.animate-thread {
-  animation: weave-thread 2s ease-in-out infinite;
-}
-
-@keyframes weave-fabric {
-  0% {
-    transform: translateY(100%);
-  }
+  50%,
   100% {
+    opacity: 0;
+    transform: translateY(-0.35em);
+  }
+}
+
+@keyframes introWordLast {
+  0% {
+    opacity: 0;
+    transform: translateY(0.45em);
+  }
+  16%,
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introBar {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes introLift {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+
+@keyframes scrollCue {
+  0% {
     transform: translateY(-100%);
   }
-}
-
-.animate-weave-fabric {
-  animation: weave-fabric 3s linear infinite;
-}
-
-@keyframes fabric-wave {
-  0% {
-    background-position: 0% 50%;
-  }
+  60%,
   100% {
-    background-position: 100% 50%;
+    transform: translateY(400%);
   }
 }
 
-.animate-fabric-wave {
-  animation: fabric-wave 5s linear infinite;
-}
-
-@keyframes stitch {
-  0% {
-    background-position-x: 0%;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
-  100% {
-    background-position-x: -100%;
+
+  .js-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
   }
-}
 
-.animate-stitch {
-  animation: stitch 1s linear infinite;
-}
-
-
-.title {
-  @apply my-3 text-2xl font-semibold capitalize sm:text-3xl;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 100px; /* Adjust based on your navbar height */
-}
-
-.rotate {
-  transform: rotateX(180deg);
-}
-
-.team-card:hover :is(h2, p) {
-  color: #e11d48;
-}
-
-.team-card:hover .icons {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-input::placeholder {
-  color: #e11d48;
-}
-
-@keyframes playPluse {
-  0% {
-    transform: translateX(-50%) translateY(-50%) translateZ(-50%);
-    opacity: 1;
-    width: 4rem;
-    height: 4rem;
-  }
-  100% {
-    transform: translateX(-50%) translateY(-50%) translateZ(-50%);
-    opacity: 0;
-    width: 9rem;
-    height: 9rem;
+  /* Don't hold someone behind a curtain they asked not to be animated at. */
+  .intro {
+    display: none;
   }
 }
 
-.playButton {
-  animation: playPluse 1.5s ease-out infinite;
-}
-
-.scrollbar::-webkit-scrollbar {
-  height: 0;
-}

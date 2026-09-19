@@ -1,256 +1,237 @@
 "use client";
+
 import { useEffect, useRef } from "react";
-import { 
-  Facebook, 
-  Github, 
-  Linkedin, 
-  Twitter, 
-  Instagram,
-  Mail,
-  Phone,
-  MapPin
-} from "lucide-react";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useReveal } from "@/lib/useReveal";
+import { prefersReducedMotion } from "@/lib/capability";
+import SplitLines from "@/components/anim/SplitLines";
+import { SITE, NAV, SOCIAL } from "@/lib/site";
 
-const Footer = () => {
-  const footerRef = useRef(null);
+export default function Footer() {
+  const scopeRef = useReveal({ stagger: 0.05 });
+  const marqueeRef = useRef(null);
+  const year = new Date().getFullYear();
 
-  const socialLinks = [
-    { icon: Facebook, href: '#' },
-    { icon: Instagram, href: '#' },
-    { icon: Linkedin, href: '#' },
-    { icon: Twitter, href: '#' },
-    { icon: Github, href: '#' }
-  ];
+  useEffect(() => {
+    const track = marqueeRef.current;
+    if (!track || prefersReducedMotion()) return;
 
-  const quickLinks = [
-    { name: 'Home', href: '#Home' },
-    { name: 'About Us', href: '#About' },
-    { name: 'Products', href: '#Products' },
-    { name: 'Machinery', href: '#Machinery' },
-    { name: 'Contact', href: '#Contact' }
-  ];
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Paused until the band is actually on screen: that guarantees the first
+      // thing anyone sees is the start of the wordmark, and it means we aren't
+      // animating a transform for the whole length of the page.
+      const tween = gsap.to(track, {
+        xPercent: -50,
+        duration: 26,
+        ease: "none",
+        repeat: -1,
+        paused: true,
+      });
+
+      ScrollTrigger.create({
+        trigger: track,
+        start: "top bottom",
+        end: "bottom top",
+        onToggle: (self) => (self.isActive ? tween.play() : tween.pause()),
+      });
+    }, track);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <>
-      <style>{`
-        .wave-animation {
-          animation: wave 15s ease-in-out infinite;
-        }
-        
-        @keyframes wave {
-          0%, 100% { transform: translateX(0) translateY(0); }
-          50% { transform: translateX(-25px) translateY(-10px); }
-        }
-
-        .fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
-        .stagger-5 { animation-delay: 0.5s; }
-
-        .creator-badge {
-          animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-        }
-      `}</style>
-
-      <footer ref={footerRef} className="relative overflow-hidden bg-rose-600">
-        {/* Background Animation - Same as original */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="flex w-[200%] h-full">
-            {/* first strip */}
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{
-                repeat: Infinity,
-                duration: 150,
-                ease: "linear",
-              }}
-              className="flex items-center h-full whitespace-nowrap will-change-transform"
-            >
-              {Array.from({ length: 10 }).map((_, i) => (
-                <span
-                  key={`text1-${i}`}
-                  className="text-[15vw] font-black text-white/10 tracking-tight select-none leading-none flex items-center"
-                >
-                  TWINSAPPARELS&nbsp;
-                </span>
-              ))}
-            </motion.div>
-
-            {/* second strip */}
-            <motion.div
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{
-                repeat: Infinity,
-                duration: 150,
-                ease: "linear",
-              }}
-              className="flex items-center h-full whitespace-nowrap will-change-transform"
-            >
-              {Array.from({ length: 10 }).map((_, i) => (
-                <span
-                  key={`text2-${i}`}
-                  className="text-[15vw] font-black text-white/10 tracking-tight select-none leading-none flex items-center"
-                >
-                  TWINSAPPARELS&nbsp;
-                </span>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Wavy Top Border */}
-        <div className="absolute top-0 left-0 right-0 overflow-hidden leading-none">
-          <svg className="relative block w-full h-20 wave-animation" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#ffffff"></path>
-          </svg>
-        </div>
-
-        <div className="container relative z-10 px-5 pt-32 pb-12 mx-auto md:px-16 max-w-7xl">
-          {/* Main Content Grid */}
-          <div className="grid gap-12 mb-16 md:grid-cols-2 lg:grid-cols-3">
-            {/* Column 1: Brand */}
-            <div className="opacity-0 fade-in-up stagger-1">
-              <Link href="/" className="inline-block mb-6">
-                <h2 className="text-5xl font-black text-white md:text-6xl">
-                  Twins
-                  <span className="block text-3xl text-rose-100 md:text-4xl">Apparels</span>
-                </h2>
-              </Link>
-              <p className="mb-6 text-lg leading-relaxed text-rose-50">
-                Weaving excellence into every fabric. Your trusted partner in premium textile manufacturing.
-              </p>
-              
-              {/* Contact Info */}
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 text-rose-50">
-                  <Mail className="w-5 h-5" />
-                  <span className="text-sm">connect@twinsapparels.com</span>
-                </div>
-                <div className="flex items-center gap-3 text-rose-50">
-                  <Phone className="w-5 h-5" />
-                  <span className="text-sm">+91 94142-12340</span>
-                </div>
-                <div className="flex items-center gap-3 text-rose-50">
-                  <MapPin className="w-5 h-5" />
-                  <span className="text-sm">Rajasthan, India</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Column 2: Navigation Links */}
-            <div className="opacity-0 fade-in-up stagger-2">
-              <h3 className="mb-6 text-2xl font-bold text-white">Explore</h3>
-              <nav>
-                <ul className="space-y-4">
-                  {quickLinks.map((link, idx) => (
-                    <li key={idx}>
-                      <Link 
-                        href={link.href}
-                        className="inline-flex items-center gap-2 text-lg font-medium transition-all text-rose-50 hover:text-white hover:gap-3 group"
-                      >
-                        <span className="flex items-center justify-center w-8 h-8 transition-colors rounded-lg bg-white/20 group-hover:bg-white/30">
-                          →
-                        </span>
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            </div>
-
-            {/* Column 3: Social & Creator */}
-            <div className="opacity-0 fade-in-up stagger-3">
-              <h3 className="mb-6 text-2xl font-bold text-white">Connect With Us</h3>
-              
-              {/* Social Icons */}
-              <div className="mb-8">
-                <div className="flex flex-wrap gap-3">
-                  {socialLinks.map((social, idx) => {
-                    const Icon = social.icon;
-                    return (
-                      <Link
-                        key={idx}
-                        href={social.href}
-                        target="_blank"
-                        className="flex items-center justify-center w-12 h-12 transition-all bg-white rounded-full text-rose-600 hover:bg-rose-50 hover:scale-110"
-                      >
-                        <Icon className="w-5 h-5" />
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Creator Credit */}
-              <div className="pt-4 border-t border-white/20">
-                <p className="mb-2 text-sm text-rose-100">
-                  A Product By
-                </p>
-                <Link 
-                  href="https://yashpokharna.com/" 
-                  target="_blank"
-                  className="inline-block text-xl font-bold text-white transition-all link-item hover:text-rose-100"
-                >
-                  Yash Pokharna 💻
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Divider */}
-          <div className="h-px mb-8 opacity-0 bg-white/20 fade-in-up stagger-4"></div>
-
-          {/* Bottom Bar */}
-          <div className="flex flex-col items-center justify-between gap-4 opacity-0 md:flex-row fade-in-up stagger-5">
-            <p className="text-sm text-rose-50">
-              © 2026 TwinsApparels. All rights reserved.
+    <footer ref={scopeRef} className="relative bg-paper-raised">
+      {/* ---------------------------------------------------------------- *
+       * Closing CTA. This is a lead-generation site, so the last thing on
+       * the page should be an ask, not a sitemap.
+       * ---------------------------------------------------------------- */}
+      <section className="border-y border-ink/10">
+        <div className="shell grid gap-10 py-20 md:py-24 lg:grid-cols-[1.1fr_0.9fr] lg:items-end lg:gap-16">
+          <div>
+            <p data-reveal className="eyebrow mb-8">
+              Next step
             </p>
-            <div className="flex gap-6 text-sm text-rose-50">
-              <Link href="#" className="transition-colors hover:text-white">Privacy Policy</Link>
-              <Link href="#" className="transition-colors hover:text-white">Terms of Service</Link>
+
+            <SplitLines className="display text-[clamp(2.2rem,5vw,4.2rem)] text-ink">
+              Put your next style
+              <br />
+              <span className="text-clay">on our line</span>
+            </SplitLines>
+          </div>
+
+          <div className="flex flex-col gap-7 lg:items-end">
+            <p
+              data-reveal
+              className="max-w-[40ch] text-sm leading-[1.8] text-ink-dim lg:text-right"
+            >
+              Send a tech pack and a quantity. You'll get a costing, a lead time
+              and a sample plan back from one of the founders.
+            </p>
+
+            <div data-reveal className="flex flex-wrap gap-4">
+              <a href="#contact" className="btn-primary">
+                Request a Quote
+                <span aria-hidden="true">→</span>
+              </a>
+              <a
+                href="/Catalogue.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                Catalogue
+                <span aria-hidden="true">↓</span>
+              </a>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Bottom Wave Decoration */}
-        <motion.div
-          animate={{ 
-            x: [0, -50, 0],
-          }}
-          transition={{
-            repeat: Infinity,
-            duration: 10,
-            ease: "easeInOut",
-          }}
-          className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-rose-400 via-pink-400 to-rose-400"
-        />
-      </footer>
-    </>
+      {/* ---------------------------------------------------------------- *
+       * Details. Four even columns so the right-hand side doesn't strand
+       * a block of empty space the way a 1.4/1/1 split did.
+       * ---------------------------------------------------------------- */}
+      <section className="shell grid gap-12 py-16 sm:grid-cols-2 md:py-20 lg:grid-cols-4 lg:gap-10">
+        <div data-reveal className="lg:col-span-1">
+          <h2 className="text-[10px] uppercase tracking-label text-ink-faint">
+            Contact
+          </h2>
+          <ul className="mt-6 flex flex-col gap-4 text-sm">
+            <li>
+              <a
+                href={`mailto:${SITE.email}`}
+                className="text-ink transition-colors duration-300 hover:text-clay"
+              >
+                {SITE.email}
+              </a>
+            </li>
+            <li>
+              <a
+                href={SITE.phoneHref}
+                className="text-ink transition-colors duration-300 hover:text-clay"
+              >
+                {SITE.phone}
+              </a>
+            </li>
+            <li className="text-ink-faint">{SITE.hours}</li>
+          </ul>
+        </div>
+
+        <div data-reveal>
+          <h2 className="text-[10px] uppercase tracking-label text-ink-faint">
+            Unit
+          </h2>
+          <address className="mt-6 max-w-[28ch] text-sm not-italic leading-[1.8] text-ink-dim">
+            {SITE.address}
+          </address>
+          <a
+            href={SITE.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-block text-sm text-clay transition-opacity duration-300 hover:opacity-70"
+          >
+            Directions ↗
+          </a>
+        </div>
+
+        <nav data-reveal aria-label="Footer">
+          <h2 className="text-[10px] uppercase tracking-label text-ink-faint">
+            Sitemap
+          </h2>
+          <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 lg:grid-cols-1">
+            {NAV.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="text-sm text-ink-dim transition-colors duration-300 hover:text-clay"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div data-reveal>
+          <h2 className="text-[10px] uppercase tracking-label text-ink-faint">
+            Elsewhere
+          </h2>
+          <ul className="mt-6 flex flex-col gap-3">
+            {SOCIAL.map((social) => (
+              <li key={social.name}>
+                <a
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-ink-dim transition-colors duration-300 hover:text-clay"
+                >
+                  {social.name} ↗
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href="/Catalogue.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-ink-dim transition-colors duration-300 hover:text-clay"
+              >
+                Catalogue (PDF) ↗
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      {/* ---------------------------------------------------------------- *
+       * Brand band. Sits inside its own full-bleed rule at the bottom so
+       * the wordmark reads as a signature closing the page, rather than an
+       * oversized headline floating above the columns.
+       * ---------------------------------------------------------------- */}
+      <div
+        className="overflow-hidden border-t border-ink/10 py-6 md:py-8"
+        aria-hidden="true"
+      >
+        <div
+          ref={marqueeRef}
+          className="flex w-max select-none will-change-transform"
+        >
+          {[0, 1].map((copy) => (
+            <p
+              key={copy}
+              className="display whitespace-nowrap pr-[0.5em] text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.9] text-clay"
+            >
+              {SITE.name}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      <div className="shell flex flex-col gap-3 border-t border-ink/10 py-7 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-[10px] uppercase tracking-label text-ink-faint">
+          © {year} {SITE.name} · Bhilwara, Rajasthan
+        </p>
+
+        <a
+          href="https://yashpokharna.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-2.5 self-start border border-clay/40 px-4 py-2.5
+                     text-[10px] uppercase tracking-label text-ink-dim
+                     transition-colors duration-300 ease-editorial hover:border-clay hover:bg-clay hover:text-paper"
+        >
+          A product by
+          <span className="font-semibold text-clay transition-colors duration-300 group-hover:text-paper">
+            Yash Pokharna
+          </span>
+          <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-0.5">
+            ↗
+          </span>
+        </a>
+      </div>
+    </footer>
   );
-};
-
-export default Footer;
+}

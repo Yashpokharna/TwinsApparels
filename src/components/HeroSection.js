@@ -1,235 +1,231 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
 
-const HeroSection = () => {
-  const line1Ref = useRef(null);
-  const line2Ref = useRef(null);
-  const paraRef = useRef(null);
-  const btnRef = useRef(null);
-  const canvasRef = useRef(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitLines from "@/components/anim/SplitLines";
+import { whenIntroDone } from "@/lib/intro";
 
-  // Animated text on mount
+const STATS = [
+  { value: "25K+", label: "Garments / month" },
+  { value: "110+", label: "Skilled staff" },
+  { value: "82", label: "Machines on floor" },
+];
+
+export default function HeroSection() {
+  const rootRef = useRef(null);
+  const platesRef = useRef(null);
+
   useEffect(() => {
-    const animateElements = [
-      { ref: line1Ref, delay: 0 },
-      { ref: line2Ref, delay: 200 },
-      { ref: paraRef, delay: 400 },
-      { ref: btnRef, delay: 600 }
-    ];
+    gsap.registerPlugin(ScrollTrigger);
 
-    animateElements.forEach(({ ref, delay }) => {
-      setTimeout(() => {
-        if (ref.current) {
-          ref.current.style.opacity = "1";
-          ref.current.style.transform = "translateY(0)";
-        }
-      }, delay);
-    });
-  }, []);
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Canvas particle effect following cursor
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const ctx = gsap.context(() => {
+      if (!reduced) {
+        // Paused, then released once the curtain has lifted. Running it on
+        // mount meant the entire hero entrance — eyebrow, copy, buttons,
+        // stats, images — played out behind a full-screen curtain and was
+        // already finished by the time anyone could see the page.
+        const intro = gsap
+          .timeline({ paused: true, defaults: { ease: "power3.out" } })
+          .from("[data-hero-eyebrow]", { opacity: 0, y: 16, duration: 0.7 }, 0.15)
+          .from("[data-hero-body]", { opacity: 0, y: 20, duration: 0.8 }, 0.75)
+          .from("[data-hero-cta]", { opacity: 0, y: 18, duration: 0.7 }, 0.9)
+          .from(
+            "[data-hero-stat]",
+            { opacity: 0, y: 20, duration: 0.7, stagger: 0.08 },
+            1.0
+          )
+          .from(
+            "[data-hero-plate]",
+            { opacity: 0, yPercent: 12, duration: 1.2, stagger: 0.12 },
+            0.5
+          );
 
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+        whenIntroDone().then(() => intro.play());
 
-    const particles = [];
-    const maxParticles = 100;
+        // Scroll-linked parallax on the image plates. `scrub` ties it to the
+        // scrollbar so the two plates drift against each other as you scroll.
+        gsap.to("[data-hero-plate='0']", {
+          yPercent: -16,
+          ease: "none",
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        });
 
-    class Particle {
-      constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.vx = (Math.random() - 0.5) * 2;
-        this.vy = (Math.random() - 0.5) * 2;
-        this.life = 1;
-        this.decay = Math.random() * 0.015 + 0.01;
-        this.size = Math.random() * 3 + 1;
-        this.color = Math.random() > 0.3 ? '220, 38, 38' : '107, 114, 128';
+        gsap.to("[data-hero-plate='1']", {
+          yPercent: -32,
+          ease: "none",
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        });
+
+        // Copy drifts up and dims as the hero leaves — hands the eye off to
+        // the next section instead of scrolling away rigidly.
+        gsap.to("[data-hero-copy]", {
+          yPercent: -12,
+          opacity: 0.25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: rootRef.current,
+            start: "center center",
+            end: "bottom top",
+            scrub: 0.6,
+          },
+        });
       }
+    }, rootRef);
 
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life -= this.decay;
-        this.vx *= 0.98;
-        this.vy *= 0.98;
-      }
-
-      draw(ctx) {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${this.color}, ${this.life * 0.4})`;
-        ctx.fill();
-      }
-    }
-
-    const handleMouseMove = (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      setMousePosition({ x: (x / window.innerWidth - 0.5) * 2, y: (y / window.innerHeight - 0.5) * 2 });
-
-      // Create particles at cursor position
-      for (let i = 0; i < 3; i++) {
-        if (particles.length < maxParticles) {
-          particles.push(new Particle(x, y));
-        }
-      }
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Update and draw particles
-      for (let i = particles.length - 1; i >= 0; i--) {
-        particles[i].update();
-        particles[i].draw(ctx);
-
-        // Remove dead particles
-        if (particles[i].life <= 0) {
-          particles.splice(i, 1);
-        }
-      }
-
-      // Draw connections between nearby particles
-      ctx.strokeStyle = 'rgba(220, 38, 38, 0.1)';
-      ctx.lineWidth = 0.5;
-      
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 100) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.globalAlpha = (1 - distance / 100) * 0.3;
-            ctx.stroke();
-            ctx.globalAlpha = 1;
-          }
-        }
-      }
-
-      requestAnimationFrame(animate);
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    const resizeHandler = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener('resize', resizeHandler);
-
-    animate();
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('resize', resizeHandler);
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-white"
-      id="Home"
+      ref={rootRef}
+      id="home"
+      className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden pb-10 pt-32 md:pb-14 md:pt-40"
     >
-      {/* Canvas for thread drawing effect */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 z-10 pointer-events-none"
-      />
+      <div className="shell grid flex-1 items-end gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+        {/* Copy */}
+        <div data-hero-copy className="relative">
+          <p data-hero-eyebrow className="eyebrow mb-8">
+            Bhilwara, Rajasthan
+          </p>
 
-      {/* Subtle fabric texture background */}
-      <div 
-        className="absolute inset-0 opacity-[0.02]"
-        style={{
-          backgroundImage: `
-            repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 3px),
-            repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 3px)
-          `,
-          backgroundSize: '3px 3px'
-        }}
-      />
+          {/* Per-character reveal, gsap.com style. SplitLines masks each line
+              and slides its characters up out of it. */}
+          <SplitLines
+            as="h1"
+            by="chars"
+            immediate
+            delay={0.15}
+            className="display text-[clamp(3.2rem,8.6vw,9rem)] text-ink"
+          >
+            Precision
+            <br />
+            In Every
+            <br />
+            <span className="text-clay">Thread</span>
+          </SplitLines>
 
-      {/* Subtle decorative elements that respond to cursor */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* Left side decoration */}
-        <div
-          className="absolute left-0 w-px transition-transform duration-700 top-1/4 h-96 bg-gradient-to-b from-transparent via-gray-300 to-transparent"
-          style={{
-            transform: `translateX(${mousePosition.x * 20}px) translateY(${mousePosition.y * 30}px)`
-          }}
-        />
-        
-        {/* Right side decoration */}
-        <div
-          className="absolute right-0 w-px transition-transform duration-700 top-1/3 h-80 bg-gradient-to-b from-transparent via-rose-300 to-transparent"
-          style={{
-            transform: `translateX(${mousePosition.x * -20}px) translateY(${mousePosition.y * -30}px)`
-          }}
-        />
+          <p
+            data-hero-body
+            className="mt-9 max-w-[46ch] text-[15px] leading-[1.75] text-ink-dim md:text-base"
+          >
+            A full-scale bottomwear manufacturing unit producing formal, casual,
+            active and lounge fits for brands and private label — cut, stitched
+            and finished under one roof.
+          </p>
 
-        {/* Subtle circles */}
+          <div data-hero-cta className="mt-10 flex flex-wrap items-center gap-4">
+            <a href="#contact" className="btn-primary">
+              Request a Quote
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <a
+              href="/Catalogue.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
+              View Catalogue
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+
+          <dl className="mt-14 grid max-w-lg grid-cols-3 gap-6 border-t border-ink/10 pt-8">
+            {STATS.map((stat) => (
+              <div key={stat.label} data-hero-stat>
+                <dt className="sr-only">{stat.label}</dt>
+                <dd>
+                  <span className="block font-display text-3xl font-bold tracking-tightest text-ink md:text-4xl">
+                    {stat.value}
+                  </span>
+                  <span className="mt-2 block text-[10px] uppercase tracking-label text-ink-faint">
+                    {stat.label}
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        {/* Small screens get a single full-width plate instead of the
+            offset pair, which needs width to read as a composition. */}
         <div
-          className="absolute w-64 h-64 transition-transform duration-1000 border border-gray-200 rounded-full top-20 left-20 opacity-30"
-          style={{
-            transform: `translate(${mousePosition.x * 40}px, ${mousePosition.y * 40}px) scale(${1 + mousePosition.x * 0.1})`
-          }}
-        />
-        
+          data-hero-plate="0"
+          className="relative mx-[calc(var(--shell-x)*-1)] h-[46vh] overflow-hidden bg-paper-soft lg:hidden"
+          aria-hidden="true"
+        >
+          <img
+            src="/filo/product-ease-grey.jpg"
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover object-top"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-paper via-transparent to-transparent" />
+        </div>
+
+        {/* Image plates — offset pair, parallaxed against each other */}
         <div
-          className="absolute transition-transform duration-1000 border rounded-full bottom-20 right-20 w-80 h-80 border-rose-200 opacity-30"
-          style={{
-            transform: `translate(${mousePosition.x * -50}px, ${mousePosition.y * -50}px) scale(${1 + mousePosition.y * 0.1})`
-          }}
-        />
+          ref={platesRef}
+          className="relative hidden h-[64vh] lg:block"
+          aria-hidden="true"
+        >
+          <div
+            data-hero-plate="0"
+            className="absolute right-0 top-0 h-[78%] w-[68%] overflow-hidden bg-paper-soft"
+          >
+            <img
+              src="/filo/product-ease-grey.jpg"
+              alt=""
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          <div
+            data-hero-plate="1"
+            className="absolute bottom-0 left-0 h-[52%] w-[52%] overflow-hidden border border-ink/10 bg-paper-soft"
+          >
+            <img
+              src="/filo/lifestyle-1.jpg"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Main Content */}
-      <div className="container relative z-20 max-w-5xl px-6 mx-auto text-center">
-        <h1 className="flex flex-col gap-3 text-4xl font-bold leading-tight text-gray-900 md:gap-4 sm:text-5xl md:text-6xl lg:text-7xl">
-          <span
-            ref={line1Ref}
-            className="transition-all duration-700 translate-y-8 opacity-0"
-          >
-            Precision In Every Thread,
+      {/* Scroll cue */}
+      <div className="shell mt-12 flex items-center justify-between">
+        <span className="flex items-center gap-3 text-[10px] uppercase tracking-label text-ink-faint">
+          <span className="relative h-8 w-px overflow-hidden bg-ink/15">
+            <span className="absolute inset-x-0 top-0 h-3 bg-clay [animation:scrollCue_2.2s_ease-in-out_infinite]" />
           </span>
-          <span
-            ref={line2Ref}
-            className="transition-all duration-700 translate-y-8 opacity-0 text-rose-600"
-          >
-            Excellence In Every Roll
-          </span>
-        </h1>
-        
-        <p
-          ref={paraRef}
-          className="max-w-3xl mx-auto mt-8 mb-10 text-lg leading-relaxed text-gray-600 transition-all duration-700 translate-y-8 opacity-0 md:text-xl"
-        >
-          We manufacture high-quality textiles with consistency, care, and
-          craftsmanship. Trusted by industries that demand nothing but the best.
-        </p>
-        
-        <div ref={btnRef} className="transition-all duration-700 translate-y-8 opacity-0">
-          <a
-            href="/Catalogue.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-10 py-4 text-base font-semibold tracking-wider text-white uppercase transition-all duration-300 rounded bg-rose-600 hover:bg-rose-700 hover:shadow-xl hover:scale-105"
-          >
-            View Catalogue
-          </a>
-        </div>
+          Scroll
+        </span>
+
+        <span className="hidden text-[10px] uppercase tracking-label text-ink-faint md:block">
+          Fabric · Form · Function
+        </span>
       </div>
     </section>
   );
-};
-
-export default HeroSection;
+}
