@@ -59,12 +59,9 @@ export default function Team() {
             <article
               key={member.name}
               data-reveal
-              className="group relative bg-paper"
+              className="group flex items-center gap-6 bg-paper p-6 md:gap-8 md:p-8 xl:gap-10 xl:p-10"
             >
-              {/* Full colour, and the name sits below the photo rather than
-                  over a fade. Desaturating a light portrait against paper
-                  leaves almost nothing on screen. */}
-              <div className="relative aspect-[4/5] overflow-hidden bg-paper-raised">
+              <div className="relative aspect-[4/5] w-32 shrink-0 overflow-hidden bg-paper-raised md:w-48">
                 <img
                   src={member.image}
                   alt={member.name}
@@ -74,23 +71,23 @@ export default function Team() {
                 />
               </div>
 
-              <div className="relative p-8 md:p-10">
+              <div className="min-w-0">
                 <span className="text-[10px] uppercase tracking-label text-clay">
                   {member.role}
                 </span>
 
-                <h3 className="mt-3 font-display text-3xl font-bold uppercase tracking-tightest text-ink md:text-4xl">
+                <h3 className="mt-3 font-display text-2xl font-bold uppercase tracking-tightest text-ink xl:text-3xl">
                   {member.name}
                 </h3>
 
-                <ul className="mt-7 flex flex-wrap gap-2">
+                <ul className="mt-5 flex flex-wrap gap-x-4 gap-y-1">
                   {Object.entries(member.links).map(([platform, url]) => (
                     <li key={platform}>
                       <a
                         href={url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex border border-ink/15 px-4 py-2.5 text-[10px] uppercase tracking-label text-ink-dim transition-colors duration-300 hover:border-clay hover:text-clay"
+                        className="text-[10px] uppercase tracking-label text-ink-dim transition-colors duration-300 hover:text-clay"
                       >
                         {platform}
                         <span className="sr-only"> — {member.name}</span>
