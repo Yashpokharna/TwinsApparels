@@ -22,7 +22,7 @@ const STEPS = [
     index: "03",
     title: "Stitching",
     body: "The line runs single needle, overlock, kansai and bartack stations, each operator on a fixed operation.",
-    detail: "50 single needle · 8 overlock",
+    detail: "80 single needle · 10 overlock",
   },
   {
     index: "04",

@@ -4,9 +4,9 @@ import { useReveal } from "@/lib/useReveal";
 import SplitLines from "@/components/anim/SplitLines";
 
 const MACHINES = [
-  { name: "Single Needle", count: 50, group: "Stitching" },
-  { name: "5 Thread Overlock", count: 8, group: "Stitching" },
-  { name: "Tandom", count: 6, group: "Stitching" },
+  { name: "Single Needle", count: 80, group: "Stitching" },
+  { name: "5 Thread Overlock", count: 10, group: "Stitching" },
+  { name: "Tandom", count: 8, group: "Stitching" },
   { name: "Edge Cutter", count: 2, group: "Stitching" },
   { name: "Bottom Hemming Blind Stitch", count: 2, group: "Finishing" },
   { name: "Bartack", count: 2, group: "Finishing" },
@@ -19,7 +19,7 @@ const MACHINES = [
   { name: "Auto Pocket Weld (APW)", count: 1, group: "Finishing" },
   { name: "Cutting Machine", count: 1, group: "Cutting" },
   { name: "Fusing Machine", count: 1, group: "Cutting" },
-  { name: "Pressing Table", count: 1, group: "Pressing" },
+  { name: "Pressing Table", count: 5, group: "Pressing" },
   { name: "Seam Buster", count: 1, group: "Pressing" },
   { name: "Boiler", count: 1, group: "Pressing" },
 ];

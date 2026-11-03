@@ -10,7 +10,7 @@ import ScrubText from "@/components/anim/ScrubText";
 const FIGURES = [
   { value: 25, suffix: "K+", label: "Garments produced monthly" },
   { value: 110, suffix: "+", label: "Skilled people on floor" },
-  { value: 82, suffix: "", label: "Machines in operation" },
+  { value: 120, suffix: "", label: "Machines in operation" },
   { value: 18, suffix: "", label: "Machine types in-house" },
 ];
 

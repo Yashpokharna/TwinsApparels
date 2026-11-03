@@ -9,7 +9,7 @@ import { whenIntroDone } from "@/lib/intro";
 const STATS = [
   { value: "25K+", label: "Garments / month" },
   { value: "110+", label: "Skilled staff" },
-  { value: "82", label: "Machines on floor" },
+  { value: "120", label: "Machines on floor" },
 ];
 
 export default function HeroSection() {
