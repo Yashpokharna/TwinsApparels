@@ -7,7 +7,6 @@ const TEAM = [
   {
     name: "Satyam Goyal",
     role: "Co-Founder",
-    image: "/team/2.png",
     links: {
       Instagram: "https://www.instagram.com/satyam__goyal/",
       LinkedIn: "https://www.linkedin.com/in/satyam-goyal-4082792ba/",
@@ -17,7 +16,6 @@ const TEAM = [
   {
     name: "Shivam Goyal",
     role: "Co-Founder",
-    image: "/team/3.png",
     links: {
       Instagram: "https://www.instagram.com/shiivamgoyall/",
       LinkedIn: "https://www.linkedin.com/in/shivam-goyal-4082792ba/",
@@ -59,18 +57,8 @@ export default function Team() {
             <article
               key={member.name}
               data-reveal
-              className="group flex items-center gap-6 bg-paper p-6 md:gap-8 md:p-8 xl:gap-10 xl:p-10"
+              className="group bg-paper p-6 md:p-8 xl:p-10"
             >
-              <div className="relative aspect-[4/5] w-32 shrink-0 overflow-hidden bg-paper-raised md:w-48">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover object-top transition-transform duration-[1.1s] ease-editorial group-hover:scale-[1.04]"
-                />
-              </div>
-
               <div className="min-w-0">
                 <span className="text-[10px] uppercase tracking-label text-clay">
                   {member.role}
