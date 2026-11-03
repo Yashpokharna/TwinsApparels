@@ -7,8 +7,8 @@ import SplitLines from "@/components/anim/SplitLines";
 import { whenIntroDone } from "@/lib/intro";
 
 const STATS = [
-  { value: "25K+", label: "Garments / month" },
-  { value: "110+", label: "Skilled staff" },
+  { value: "35K+", label: "Garments / month" },
+  { value: "120+", label: "Skilled staff" },
   { value: "120", label: "Machines on floor" },
 ];
 
