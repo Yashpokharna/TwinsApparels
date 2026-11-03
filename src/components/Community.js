@@ -12,7 +12,7 @@ const VALUES = [
   {
     index: "02",
     title: "Responsible production",
-    body: "Fair hours for 120+ people, efficient marker planning to cut fabric waste, and steam recovered from a single central boiler.",
+    body: "Fair hours for 150+ people, efficient marker planning to cut fabric waste, and steam recovered from a single central boiler.",
   },
   {
     index: "03",

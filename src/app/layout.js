@@ -23,7 +23,7 @@ export const metadata = {
     template: "%s | Twins Apparels",
   },
   description:
-    "Twins Apparels manufactures premium ready-to-wear bottomwear from Bhilwara, Rajasthan — 120 machines, 120+ skilled staff, 35,000 garments a month. Formal, casual, active and lounge fits for brands and private label.",
+    "Twins Apparels manufactures premium ready-to-wear bottomwear from Bhilwara, Rajasthan — 120 machines, 150+ skilled staff, 35,000 garments a month. Formal, casual, active and lounge fits for brands and private label.",
   keywords: [
     "garment manufacturer India",
     "bottomwear manufacturer",

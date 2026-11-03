@@ -8,7 +8,7 @@ import { whenIntroDone } from "@/lib/intro";
 
 const STATS = [
   { value: "35K+", label: "Garments / month" },
-  { value: "120+", label: "Skilled staff" },
+  { value: "150+", label: "Skilled staff" },
   { value: "120", label: "Machines on floor" },
 ];
 
