@@ -25,7 +25,7 @@ export default function Footer() {
       // animating a transform for the whole length of the page.
       const tween = gsap.to(track, {
         xPercent: -50,
-        duration: 26,
+        duration: 104, // 26s per wordmark × 4 wordmarks per half
         ease: "none",
         repeat: -1,
         paused: true,
@@ -178,7 +178,10 @@ export default function Footer() {
           ref={marqueeRef}
           className="flex w-max select-none will-change-transform"
         >
-          {[0, 1].map((copy) => (
+          {/* Two identical halves, each wider than any viewport, so the
+              -50% loop always has wordmark filling the band — with only two
+              copies the strip ran out on wide screens and left a gap. */}
+          {Array.from({ length: 8 }, (_, copy) => (
             <p
               key={copy}
               className="display whitespace-nowrap pr-[0.5em] text-[clamp(2.75rem,9vw,7.5rem)] leading-[0.9] text-clay"
