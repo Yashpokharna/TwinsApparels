@@ -85,6 +85,15 @@ export default function Footer() {
                 Product Catalogue
                 <span aria-hidden="true">↓</span>
               </a>
+              <a
+                href="/Company-Profile.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                Company Profile
+                <span aria-hidden="true">↓</span>
+              </a>
             </div>
           </div>
         </div>

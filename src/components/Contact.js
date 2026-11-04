@@ -92,16 +92,26 @@ export default function Contact() {
               ))}
             </ul>
 
-            <a
-              data-reveal
-              href="/Catalogue.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary mt-10"
-            >
-              Download Product Catalogue
-              <span aria-hidden="true">↓</span>
-            </a>
+            <div data-reveal className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="/Catalogue.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+              >
+                Download Product Catalogue
+                <span aria-hidden="true">↓</span>
+              </a>
+              <a
+                href="/Company-Profile.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-ghost"
+              >
+                Company Profile
+                <span aria-hidden="true">↓</span>
+              </a>
+            </div>
           </div>
 
           {/* Map. Always present, no click required. The Google Maps embed is

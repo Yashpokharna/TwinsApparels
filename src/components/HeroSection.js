@@ -141,6 +141,16 @@ export default function HeroSection() {
               Product Catalogue
               <span aria-hidden="true">↗</span>
             </a>
+
+            <a
+              href="/Company-Profile.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ghost"
+            >
+              Company Profile
+              <span aria-hidden="true">↗</span>
+            </a>
           </div>
 
           <dl className="mt-14 grid max-w-lg grid-cols-3 gap-6 border-t border-ink/10 pt-8">
