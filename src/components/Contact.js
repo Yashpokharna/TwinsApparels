@@ -99,7 +99,7 @@ export default function Contact() {
               rel="noopener noreferrer"
               className="btn-primary mt-10"
             >
-              Download Catalogue
+              Download Product Catalogue
               <span aria-hidden="true">↓</span>
             </a>
           </div>

@@ -82,7 +82,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="btn-ghost"
               >
-                Catalogue
+                Product Catalogue
                 <span aria-hidden="true">↓</span>
               </a>
             </div>

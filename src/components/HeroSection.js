@@ -138,7 +138,7 @@ export default function HeroSection() {
               rel="noopener noreferrer"
               className="btn-ghost"
             >
-              View Catalogue
+              Product Catalogue
               <span aria-hidden="true">↗</span>
             </a>
           </div>
